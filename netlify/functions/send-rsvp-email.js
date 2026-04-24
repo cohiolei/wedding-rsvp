@@ -1,37 +1,37 @@
-export default async (request) => {
+import { Resend } from "resend";
+
+export async function handler(event) {
   try {
-    if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
-    }
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const body = await request.json();
+    const data = JSON.parse(event.body);
 
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from: "Meet The Baileys <onboarding@resend.dev>",
-        to: ["meetthebaileys2026@gmail.com"],
-        subject: "A new RSVP has been submitted",
-        html: `
-          <h2>A new RSVP has been submitted</h2>
-          <p><strong>First name:</strong> ${body.first_name}</p>
-          <p><strong>Last name:</strong> ${body.last_name}</p>
-          <p><strong>Email:</strong> ${body.email}</p>
-          <p><strong>No. of additional guests:</strong> ${body.additional_guest_count}</p>
-          <p><strong>Date:</strong> ${body.submitted_at}</p>
-        `
-      })
+    const response = await resend.emails.send({
+      from: "Meet The Baileys <onboarding@resend.dev>",
+      to: ["meetthebaileys2026@gmail.com"], // ← YOUR EMAIL
+      subject: "A new RSVP has been submitted",
+      html: `
+        <h2>New RSVP</h2>
+        <p><strong>First Name:</strong> ${data.first_name}</p>
+        <p><strong>Last Name:</strong> ${data.last_name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Guests:</strong> ${data.additional_guest_count}</p>
+        <p><strong>Time:</strong> ${data.submitted_at}</p>
+      `,
     });
 
-    const text = await response.text();
+    console.log("EMAIL SENT:", response);
 
-    return new Response(text, { status: 200 });
-
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true }),
+    };
   } catch (err) {
-    return new Response(err.message, { status: 500 });
+    console.error("EMAIL ERROR:", err);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
   }
-};
+}
