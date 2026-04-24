@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP - Meet The Baileys</title>
+  <style>
+    :root {
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text: #1f1f1f;
+      --accent: #1d2430;
+      --accent-2: #4a5568;
+      --border: rgba(0, 0, 0, 0.08);
+      --shadow: 0 18px 40px rgba(0,0,0,0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(248,245,240,0.35), rgba(248,245,240,0.35)),
+        url("background.jpg") center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card-bg);
+      backdrop-filter: blur(6px);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 36px 28px;
+      border: 1px solid rgba(255,255,255,0.45);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 2.2rem;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin: 0 0 28px;
+      font-size: 0.98rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      margin: 18px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    input, button, select {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      margin: 8px 0;
+      font-family: Arial, sans-serif;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #a0aec0;
+      box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.18);
+    }
+
+    button {
+      border: none;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      opacity: 0.96;
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: var(--accent-2);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .row > * {
+      flex: 1;
+    }
+
+    .guest-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .guest-name {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      font-weight: 600;
+    }
+
+    .guest-note {
+      text-align: center;
+      margin: 0 0 16px;
+      color: #666;
+      font-size: 0.95rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 16px;
+      min-height: 22px;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      color: #7a1f1f;
+    }
+
+    .small-note {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .lookup-wrap.hidden-after-match {
+      display: none;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 460px;
+      background: white;
+      border-radius: 22px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0,0,0,0.22);
+    }
+
+    .modal h2 {
+      margin: 0 0 10px;
+      font-size: 1.8rem;
+    }
+
+    .modal p {
+      margin: 0 0 18px;
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .modal a {
+      display: inline-block;
+      margin-top: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+    }
+
+    .modal a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        padding: 28px 18px;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Meet The Baileys</h1>
+    <p class="subtitle">
+      Kindly find your invitation below and submit your RSVP.
+    </p>
+
+    <div id="lookupWrap" class="lookup-wrap">
+      <input id="first" placeholder="First Name" />
+      <input id="last" placeholder="Last Name" />
+      <button id="findBtn" type="button">Find Invitation</button>
+    </div>
+
+    <div id="rsvpSection" class="hidden">
+      <div class="guest-box">
+        <h2 id="guestName" class="guest-name"></h2>
+        <p id="guestNote" class="guest-note"></p>
+
+        <input id="email" type="email" placeholder="Email for confirmation" />
+
+        <div id="extraGuests" class="hidden">
+          <p id="extraGuestsLabel" class="section-title">Number of additional guests</p>
+          <input id="guestCount" type="number" min="0" max="20" value="0" />
+        </div>
+
+        <p class="section-title">Will you attend?</p>
+        <div class="row">
+          <button id="yesBtn" type="button">Yes</button>
+          <button id="noBtn" type="button" class="secondary">No</button>
+        </div>
+
+        <button id="editSearchBtn" type="button" class="secondary" style="margin-top:14px;">
+          Search Another Name
+        </button>
+      </div>
+    </div>
+
+    <p id="message" class="message"></p>
+    <p class="small-note">
+      Already submitted before? Search your name again and submit a new response to update it.
+    </p>
+  </div>
+
+  <div id="successModal" class="modal-backdrop hidden">
+    <div class="modal">
+      <h2>Thank you for your response</h2>
+      <p>Your RSVP has been received successfully.</p>
+      <a href="https://meetthebaileys2026.wixsite.com/my-site" target="_blank" rel="noopener noreferrer">
+        Visit our website
+      </a>
+      <div style="margin-top:20px;">
+        <button id="closeModalBtn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+
+    const supabaseUrl = 'https://ckuifenortjzehpkruqj.supabase.co';
+    const supabaseKey = 'sb_publishable_fhicYcgxgp9_felxHTTHmA_EJHeXLky';
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    let currentGuest = null;
+
+    const firstEl = document.getElementById('first');
+    const lastEl = document.getElementById('last');
+    const emailEl = document.getElementById('email');
+    const guestCountEl = document.getElementById('guestCount');
+    const guestNameEl = document.getElementById('guestName');
+    const guestNoteEl = document.getElementById('guestNote');
+    const rsvpSectionEl = document.getElementById('rsvpSection');
+    const extraGuestsEl = document.getElementById('extraGuests');
+    const extraGuestsLabelEl = document.getElementById('extraGuestsLabel');
+    const messageEl = document.getElementById('message');
+    const lookupWrapEl = document.getElementById('lookupWrap');
+    const successModalEl = document.getElementById('successModal');
+
+    function showMessage(text, isError = true) {
+      messageEl.textContent = text;
+      messageEl.style.color = isError ? '#7a1f1f' : '#2f6b3c';
+    }
+
+    function resetLookup() {
+      currentGuest = null;
+      firstEl.value = '';
+      lastEl.value = '';
+      emailEl.value = '';
+      guestCountEl.value = 0;
+      guestNameEl.textContent = '';
+      guestNoteEl.textContent = '';
+      rsvpSectionEl.classList.add('hidden');
+      lookupWrapEl.classList.remove('hidden-after-match');
+      showMessage('', false);
+    }
+
+    function showModal() {
+      successModalEl.classList.remove('hidden');
+    }
+
+    function hideModal() {
+      successModalEl.classList.add('hidden');
+    }
+
+    async function checkGuest() {
+      const first = firstEl.value.trim().toLowerCase();
+      const last = lastEl.value.trim().toLowerCase();
+
+      if (!first || !last) {
+        showMessage('Enter your first and last name.');
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('guests')
+        .select('*')
+        .eq('first_name_lower', first)
+        .eq('last_name_lower', last)
+        .maybeSingle();
+
+      if (error) {
+        showMessage('Lookup failed.');
+        return;
+      }
+
+      if (!data) {
+        showMessage('We could not find your invitation.');
+        return;
+      }
+
+      currentGuest = data;
+      guestNameEl.textContent = `${data.first_name} ${data.last_name}`;
+
+      const maxGuests = data.max_additional_guests || 0;
+      if (maxGuests > 0) {
+        guestNoteEl.textContent = `We found your invitation. You may RSVP for yourself and up to ${maxGuests} additional guest${maxGuests > 1 ? 's' : ''}.`;
+        extraGuestsEl.classList.remove('hidden');
+        guestCountEl.max = maxGuests;
+        guestCountEl.value = 0;
+        extraGuestsLabelEl.textContent = `Number of additional guests (0-${maxGuests})`;
+      } else {
+        guestNoteEl.textContent = 'We found your invitation.';
+        extraGuestsEl.classList.add('hidden');
+        guestCountEl.value = 0;
+      }
+
+      const { data: existingRsvp } = await supabase
+        .from('rsvps')
+        .select('*')
+        .eq('guest_id', data.id)
+        .maybeSingle();
+
+      if (existingRsvp) {
+        emailEl.value = existingRsvp.email || '';
+        guestCountEl.value = existingRsvp.additional_guest_count || 0;
+        showMessage('Your existing RSVP was found. You can update it below.', false);
+      } else {
+        emailEl.value = '';
+        guestCountEl.value = 0;
+        showMessage('', false);
+      }
+
+      lookupWrapEl.classList.add('hidden-after-match');
+      rsvpSectionEl.classList.remove('hidden');
+    }
+
+    async function submitRSVP(attending) {
+      if (!currentGuest) {
+        showMessage('Find your invitation first.');
+        return;
+      }
+
+      const email = emailEl.value.trim();
+      const count = parseInt(guestCountEl.value || '0', 10);
+      const maxGuests = currentGuest.max_additional_guests || 0;
+
+      if (!email) {
+        showMessage('Enter your email.');
+        return;
+      }
+
+      if (Number.isNaN(count) || count < 0 || count > maxGuests) {
+        showMessage('Enter a valid additional guest count.');
+        return;
+      }
+
+      const payload = {
+        guest_id: currentGuest.id,
+        email,
+        primary_attending: attending,
+        additional_guest_count: count
+      };
+
+      const { error } = await supabase
+        .from('rsvps')
+        .upsert([payload], { onConflict: 'guest_id' });
+
+     if (error) {
+  showMessage('Error submitting RSVP.');
+  return;
+}
+
+await fetch("/.netlify/functions/send-rsvp-email", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    first_name: currentGuest.first_name,
+    last_name: currentGuest.last_name,
+    email: email,
+    additional_guest_count: count,
+    submitted_at: new Date().toLocaleString()
+  })
+});
+
+showMessage('', false);
+showModal();
+resetLookup();
+    }
+
+    document.getElementById('findBtn').addEventListener('click', checkGuest);
+    document.getElementById('yesBtn').addEventListener('click', () => submitRSVP(true));
+    document.getElementById('noBtn').addEventListener('click', () => submitRSVP(false));
+    document.getElementById('editSearchBtn').addEventListener('click', resetLookup);
+    document.getElementById('closeModalBtn').addEventListener('click', hideModal);
+
+    successModalEl.addEventListener('click', (e) => {
+      if (e.target === successModalEl) hideModal();
+    });
+  </script>
+</body>
+</html>
