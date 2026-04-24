@@ -8,7 +8,7 @@ export async function handler(event) {
 
     const response = await resend.emails.send({
       from: "Meet The Baileys <onboarding@resend.dev>",
-      to: ["meetthebaileys2026@gmail.com"], // ← YOUR EMAIL
+      to: ["omokhefeehimiaghe@gmail.com"], // ← YOUR EMAIL
       subject: "A new RSVP has been submitted",
       html: `
         <h2>New RSVP</h2>
