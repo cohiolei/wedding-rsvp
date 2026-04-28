@@ -431,6 +431,7 @@ await fetch("/.netlify/functions/send-rsvp-email", {
     first_name: currentGuest.first_name,
     last_name: currentGuest.last_name,
     email: email,
+    primary_attending: attending,
     additional_guest_count: count,
     submitted_at: new Date().toLocaleString()
   })
