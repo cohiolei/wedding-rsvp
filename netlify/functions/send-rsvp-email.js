@@ -9,7 +9,7 @@ export async function handler(event) {
     const response = await resend.emails.send({
       from: "Meet The Baileys <rsvp@meetthebaileys2026.online>",
       to: ["meetthebaileys2026@gmail.com"], // ← YOUR EMAIL
-      subject: "A new RSVP has been submitted",
+      subject: `RSVP - ${data.first_name} ${data.last_name} - ${new Date().toLocaleString()}`,
       html: `
         <h2>New RSVP</h2>
         <p><strong>First Name:</strong> ${data.first_name}</p>
@@ -27,7 +27,7 @@ await resend.emails.send({
   html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #222;">
     <img 
-      src="https://thunderous-medovik-958d49.netlify.app/background.jpg" 
+      src="https://meetthebaileys2026.online/background.jpg" 
       alt="Chelsea and David" 
       style="width: 100%; border-radius: 12px; display: block; margin-bottom: 24px;"
     />
