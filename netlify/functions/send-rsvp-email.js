@@ -25,11 +25,24 @@ await resend.emails.send({
   to: [data.email],
   subject: "RSVP Confirmation",
   html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #222;">
+    <img 
+      src="https://thunderous-medovik-958d49.netlify.app/background.jpg" 
+      alt="Chelsea and David" 
+      style="width: 100%; border-radius: 12px; display: block; margin-bottom: 24px;"
+    />
+
+    <h2 style="text-align: center;">Thank you for your RSVP</h2>
+
     <p>Hi ${data.first_name},</p>
-    <p>Thank you for your RSVP.</p>
-    <p>We’ve recorded your response as: <strong>${data.primary_attending ? "Yes" : "No"}</strong></p>
-    <p>Additional guests: ${data.additional_guest_count}</p>
+
+    <p>Thank you for your response. We’ve recorded your RSVP.</p>
+
+    <p><strong>Attending:</strong> ${data.primary_attending ? "Yes" : "No"}</p>
+    <p><strong>Additional guests:</strong> ${data.additional_guest_count}</p>
+
     <p>With love,<br>Chelsea & David</p>
+  </div>
   `,
 });
 
