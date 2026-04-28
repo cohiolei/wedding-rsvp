@@ -20,6 +20,19 @@ export async function handler(event) {
         <p><strong>Time:</strong> ${data.submitted_at}</p>
       `,
     });
+await resend.emails.send({
+  from: "Meet The Baileys <rsvp@meetthebaileys2026.online>",
+  to: [data.email],
+  subject: "RSVP Confirmation",
+  html: `
+    <p>Hi ${data.first_name},</p>
+    <p>Thank you for your RSVP.</p>
+    <p>We’ve recorded your response as: <strong>${data.primary_attending ? "Yes" : "No"}</strong></p>
+    <p>Additional guests: ${data.additional_guest_count}</p>
+    <p>With love,<br>Chelsea & David</p>
+  `,
+});
+
 
     console.log("EMAIL SENT:", response);
 
