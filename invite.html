@@ -972,202 +972,156 @@
 
     <script>
 
+    /* =====================================
+       COUNTDOWN
+    ===================================== */
 
-        /* =========================
-           COUNTDOWN
-        ========================= */
+    const weddingDate =
+        new Date("2026-10-01T11:00:00+01:00");
+
+    const countdownNumber =
+        document.getElementById("countdownNumber");
+
+    const countdownText =
+        document.getElementById("countdownText");
 
 
-        const weddingDate =
-            new Date(
-                "2026-10-01T11:00:00+01:00"
+    function updateCountdown() {
+
+        const now = new Date();
+
+        const difference =
+            weddingDate.getTime() - now.getTime();
+
+
+        if (difference > 0) {
+
+            const days = Math.ceil(
+                difference / (1000 * 60 * 60 * 24)
             );
 
+            countdownNumber.textContent = days;
 
-        const countdownNumber =
-            document.getElementById(
-                "countdownNumber"
-            );
+            countdownText.textContent =
+                days === 1
+                    ? "Day Until We Say “I Do”"
+                    : "Days Until We Say “I Do”";
 
+        } else {
 
-        const countdownText =
-            document.getElementById(
-                "countdownText"
-            );
+            const weddingDayEnd =
+                new Date("2026-10-02T00:00:00+01:00");
 
-
-        function updateCountdown() {
-
-            const now =
-                new Date();
-
-
-            const difference =
-                weddingDate.getTime()
-                -
-                now.getTime();
-
-
-            if (difference > 0) {
-
-                const days =
-                    Math.ceil(
-                        difference /
-                        (
-                            1000 *
-                            60 *
-                            60 *
-                            24
-                        )
-                    );
-
+            if (now < weddingDayEnd) {
 
                 countdownNumber.textContent =
-                    days;
-
+                    "Today";
 
                 countdownText.textContent =
-                    days === 1
-                        ?
-                        "Day Until We Say “I Do”"
-                        :
-                        "Days Until We Say “I Do”";
+                    "Today Is the Day!";
 
             } else {
 
+                countdownNumber.textContent =
+                    "Thank You";
 
-                const weddingDayEnd =
-                    new Date(
-                        "2026-10-02T00:00:00+01:00"
-                    );
-
-
-                if (
-                    now <
-                    weddingDayEnd
-                ) {
-
-                    countdownNumber.textContent =
-                        "Today";
-
-
-                    countdownText.textContent =
-                        "Today Is the Day!";
-
-                } else {
-
-                    countdownNumber.textContent =
-                        "Thank You";
-
-
-                    countdownText.textContent =
-                        "For Celebrating With Us";
-
-                }
-
+                countdownText.textContent =
+                    "For Celebrating With Us";
             }
-
         }
+    }
 
 
-        updateCountdown();
+    updateCountdown();
+
+    setInterval(
+        updateCountdown,
+        60 * 60 * 1000
+    );
 
 
-        setInterval(
-            updateCountdown,
-            60 * 60 * 1000
-        );
+
+    /* =====================================
+       MUSIC
+    ===================================== */
+
+    const weddingMusic =
+        document.getElementById("weddingMusic");
+
+    const musicButton =
+        document.getElementById("musicButton");
 
 
+    musicButton.addEventListener(
+        "click",
+        function () {
 
-        /* =========================
-           MUSIC
-        ========================= */
+            if (weddingMusic.paused) {
 
+                weddingMusic.play()
+                    .then(function () {
 
-        const weddingMusic =
-            document.getElementById(
-                "weddingMusic"
-            );
+                        musicButton.textContent =
+                            "⏸ Pause Music";
 
+                    })
+                    .catch(function (error) {
 
-        const musicButton =
-            document.getElementById(
-                "musicButton"
-            );
+                        console.error(
+                            "Music playback error:",
+                            error
+                        );
 
+                    });
 
-        musicButton.addEventListener(
-            "click",
-            function () {
+            } else {
 
+                weddingMusic.pause();
 
-                if (
-                    weddingMusic.paused
-                ) {
-
-
-                    weddingMusic.play();
-
-
-                    musicButton.textContent =
-                        "⏸ Pause Music";
-
-
-                } else {
-
-
-                    weddingMusic.pause();
-
-
-                    musicButton.textContent =
-                        "♪ Play Our Song";
-
-                }
-
+                musicButton.textContent =
+                    "♪ Play Our Song";
             }
-        );
+        }
+    );
 
 
 
-        /* =========================
-           INVITATION ↔ SCHEDULE
-        ========================= */
+    /* =====================================
+       INVITATION / SCHEDULE SWITCHING
+    ===================================== */
+
+    const invitationView =
+        document.getElementById("invitationView");
+
+    const scheduleView =
+        document.getElementById("scheduleView");
+
+    const viewScheduleButton =
+        document.getElementById("viewScheduleButton");
+
+    const backToInvitationButton =
+        document.getElementById("backToInvitationButton");
 
 
-        const invitationView =
-            document.getElementById(
-                "invitationView"
-            );
-
-
-        const scheduleView =
-            document.getElementById(
-                "scheduleView"
-            );
-
-
-        const viewScheduleButton =
-            document.getElementById(
-                "viewScheduleButton"
-            );
-
-
-        const backToInvitationButton =
-            document.getElementById(
-                "backToInvitationButton"
-            );
-
-
-        viewScheduleButton.addEventListener(
-    "click",
-    function () {
+    function showSchedule() {
 
         invitationView.style.display =
             "none";
 
         scheduleView.style.display =
             "block";
+
+        scheduleView.classList.remove(
+            "visible"
+        );
+
+        /*
+         Force the browser to register the
+         display change before applying
+         the entrance animation.
+        */
+
+        void scheduleView.offsetWidth;
 
         scheduleView.classList.add(
             "visible"
@@ -1177,314 +1131,289 @@
             top: 0,
             behavior: "smooth"
         });
-
     }
-);
 
 
-                /*
-                IMPORTANT:
-                The audio element never reloads,
-                so the song keeps playing here.
-                */
+    function showInvitation() {
 
-            }
+        scheduleView.classList.remove(
+            "visible"
         );
 
+        scheduleView.style.display =
+            "none";
 
-        backToInvitationButton.addEventListener(
-            "click",
+        invitationView.style.display =
+            "block";
+
+        /*
+         Don't replay the original
+         3-second animation every time
+         the guest returns.
+        */
+
+        invitationView.style.opacity =
+            "1";
+
+        invitationView.style.animation =
+            "none";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    viewScheduleButton.addEventListener(
+        "click",
+        showSchedule
+    );
+
+
+    backToInvitationButton.addEventListener(
+        "click",
+        showInvitation
+    );
+
+
+
+    /* =====================================
+       CONFETTI
+       Runs every time page is refreshed
+    ===================================== */
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (!prefersReducedMotion) {
+
+        window.addEventListener(
+            "load",
             function () {
 
-
-                scheduleView.classList.remove(
-                    "visible"
+                setTimeout(
+                    startConfetti,
+                    600
                 );
-
-
-                scheduleView.style.display =
-                    "none";
-
-
-                invitationView.style.display =
-                    "block";
-
-
-                /*
-                We do not replay the original
-                3-second entrance animation here.
-                */
-
-                invitationView.style.opacity =
-                    "1";
-
-
-                invitationView.style.animation =
-                    "none";
-
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
 
             }
         );
+    }
 
 
+    function startConfetti() {
 
-        /* =========================
-           CONFETTI
-           SHOW EVERY PAGE LOAD
-        ========================= */
+        const canvas =
+            document.getElementById(
+                "confettiCanvas"
+            );
 
-
-        const prefersReducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
-
-
-        if (!prefersReducedMotion) {
+        if (!canvas) {
+            return;
+        }
 
 
-            window.addEventListener(
-                "load",
-                function () {
+        const context =
+            canvas.getContext("2d");
+
+        if (!context) {
+            return;
+        }
 
 
-                    setTimeout(
-                        startConfetti,
-                        600
-                    );
+        let width;
+        let height;
+        let animationFrame;
+
+        const pieces = [];
+
+        const pieceCount = 80;
+
+        const goldColours = [
+            "#D4AF37",
+            "#F3D675",
+            "#B08D57",
+            "#FFF0B3",
+            "#C9A227"
+        ];
+
+
+        function resizeCanvas() {
+
+            width =
+                window.innerWidth;
+
+            height =
+                window.innerHeight;
+
+            const ratio =
+                window.devicePixelRatio || 1;
+
+            canvas.width =
+                width * ratio;
+
+            canvas.height =
+                height * ratio;
+
+            canvas.style.width =
+                width + "px";
+
+            canvas.style.height =
+                height + "px";
+
+            context.setTransform(
+                ratio,
+                0,
+                0,
+                ratio,
+                0,
+                0
+            );
+        }
+
+
+        function createPiece() {
+
+            return {
+
+                x:
+                    Math.random() * width,
+
+                y:
+                    Math.random() * -height,
+
+                width:
+                    5 + Math.random() * 6,
+
+                height:
+                    8 + Math.random() * 10,
+
+                speed:
+                    1.5 + Math.random() * 2.5,
+
+                drift:
+                    -0.8 + Math.random() * 1.6,
+
+                rotation:
+                    Math.random() *
+                    Math.PI *
+                    2,
+
+                rotationSpeed:
+                    -0.05 +
+                    Math.random() * 0.1,
+
+                colour:
+                    goldColours[
+                        Math.floor(
+                            Math.random() *
+                            goldColours.length
+                        )
+                    ]
+            };
+        }
+
+
+        function drawPiece(piece) {
+
+            context.save();
+
+            context.translate(
+                piece.x,
+                piece.y
+            );
+
+            context.rotate(
+                piece.rotation
+            );
+
+            context.fillStyle =
+                piece.colour;
+
+            context.fillRect(
+                -piece.width / 2,
+                -piece.height / 2,
+                piece.width,
+                piece.height
+            );
+
+            context.restore();
+        }
+
+
+        function updatePiece(piece) {
+
+            piece.y +=
+                piece.speed;
+
+            piece.x +=
+                piece.drift;
+
+            piece.rotation +=
+                piece.rotationSpeed;
+        }
+
+
+        function animate() {
+
+            context.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+            pieces.forEach(
+                function (piece) {
+
+                    updatePiece(piece);
+
+                    drawPiece(piece);
 
                 }
             );
 
+            animationFrame =
+                requestAnimationFrame(
+                    animate
+                );
         }
 
 
+        resizeCanvas();
 
-        function startConfetti() {
+
+        for (
+            let i = 0;
+            i < pieceCount;
+            i++
+        ) {
+
+            pieces.push(
+                createPiece()
+            );
+        }
 
 
-            const canvas =
-                document.getElementById(
-                    "confettiCanvas"
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        animate();
+
+
+        setTimeout(
+            function () {
+
+                cancelAnimationFrame(
+                    animationFrame
                 );
-
-
-            const context =
-                canvas.getContext("2d");
-
-
-            let width;
-
-            let height;
-
-            let animationFrame;
-
-
-            const pieces = [];
-
-
-            const pieceCount = 80;
-
-
-            const goldColours = [
-
-                "#D4AF37",
-                "#F3D675",
-                "#B08D57",
-                "#FFF0B3",
-                "#C9A227"
-
-            ];
-
-
-            function resizeCanvas() {
-
-
-                width =
-                    window.innerWidth;
-
-
-                height =
-                    window.innerHeight;
-
-
-                canvas.width =
-                    width *
-                    window.devicePixelRatio;
-
-
-                canvas.height =
-                    height *
-                    window.devicePixelRatio;
-
-
-                canvas.style.width =
-                    width +
-                    "px";
-
-
-                canvas.style.height =
-                    height +
-                    "px";
-
-
-                context.setTransform(
-
-                    window.devicePixelRatio,
-
-                    0,
-
-                    0,
-
-                    window.devicePixelRatio,
-
-                    0,
-
-                    0
-
-                );
-
-            }
-
-
-
-            function createPiece() {
-
-
-                return {
-
-                    x:
-                        Math.random()
-                        *
-                        width,
-
-                    y:
-                        Math.random()
-                        *
-                        -height,
-
-                    width:
-                        5
-                        +
-                        Math.random()
-                        *
-                        6,
-
-                    height:
-                        8
-                        +
-                        Math.random()
-                        *
-                        10,
-
-                    speed:
-                        1.5
-                        +
-                        Math.random()
-                        *
-                        2.5,
-
-                    drift:
-                        -0.8
-                        +
-                        Math.random()
-                        *
-                        1.6,
-
-                    rotation:
-                        Math.random()
-                        *
-                        Math.PI
-                        *
-                        2,
-
-                    rotationSpeed:
-                        -0.05
-                        +
-                        Math.random()
-                        *
-                        0.1,
-
-                    colour:
-                        goldColours[
-                            Math.floor(
-                                Math.random()
-                                *
-                                goldColours.length
-                            )
-                        ]
-
-                };
-
-            }
-
-
-
-            function drawPiece(piece) {
-
-
-                context.save();
-
-
-                context.translate(
-                    piece.x,
-                    piece.y
-                );
-
-
-                context.rotate(
-                    piece.rotation
-                );
-
-
-                context.fillStyle =
-                    piece.colour;
-
-
-                context.fillRect(
-
-                    -piece.width / 2,
-
-                    -piece.height / 2,
-
-                    piece.width,
-
-                    piece.height
-
-                );
-
-
-                context.restore();
-
-            }
-
-
-
-            function updatePiece(piece) {
-
-
-                piece.y +=
-                    piece.speed;
-
-
-                piece.x +=
-                    piece.drift;
-
-
-                piece.rotation +=
-                    piece.rotationSpeed;
-
-            }
-
-
-
-            function animate() {
-
 
                 context.clearRect(
                     0,
@@ -1493,89 +1422,17 @@
                     height
                 );
 
-
-                pieces.forEach(
-                    function (piece) {
-
-
-                        updatePiece(piece);
-
-
-                        drawPiece(piece);
-
-                    }
+                window.removeEventListener(
+                    "resize",
+                    resizeCanvas
                 );
 
+            },
+            2500
+        );
+    }
 
-                animationFrame =
-                    requestAnimationFrame(
-                        animate
-                    );
-
-            }
-
-
-
-            resizeCanvas();
-
-
-
-            for (
-                let index = 0;
-                index < pieceCount;
-                index++
-            ) {
-
-
-                pieces.push(
-                    createPiece()
-                );
-
-            }
-
-
-
-            window.addEventListener(
-                "resize",
-                resizeCanvas
-            );
-
-
-            animate();
-
-
-
-            setTimeout(
-                function () {
-
-
-                    cancelAnimationFrame(
-                        animationFrame
-                    );
-
-
-                    context.clearRect(
-                        0,
-                        0,
-                        width,
-                        height
-                    );
-
-
-                    window.removeEventListener(
-                        "resize",
-                        resizeCanvas
-                    );
-
-
-                },
-                2500
-            );
-
-        }
-
-
-    </script>
+</script>
 
 
 </body>
