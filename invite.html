@@ -383,33 +383,27 @@
 
         let musicIsPlaying = false;
 
-        musicButton.addEventListener("click", async function () {
-            try {
-                if (musicIsPlaying) {
-                    weddingMusic.pause();
+musicButton.onclick = function () {
 
-                    musicButton.textContent =
-                        "♪ Play Our Song";
+    if (musicIsPlaying) {
 
-                    musicIsPlaying = false;
-                } else {
-                    await weddingMusic.play();
+        weddingMusic.pause();
 
-                    musicButton.textContent =
-                        "❚❚ Pause Music";
+        musicButton.innerHTML = "♪ Play Our Song";
 
-                    musicIsPlaying = true;
-                }
-            } catch (error) {
-                musicButton.textContent =
-                    "Unable to Play Music";
+        musicIsPlaying = false;
 
-                console.error(
-                    "Music playback failed:",
-                    error
-                );
-            }
-        });
+    } else {
+
+        weddingMusic.play();
+
+        musicButton.innerHTML = "❚❚ Pause Music";
+
+        musicIsPlaying = true;
+
+    }
+
+};
 
         weddingMusic.addEventListener("pause", function () {
             if (!weddingMusic.ended) {
