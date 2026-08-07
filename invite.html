@@ -1,177 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Chelsea & David Bailey</title>
+    <title>Chelsea & David Bailey | Wedding Invitation</title>
 
-<style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            min-height: 100vh;
 
-body{
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("background.jpg");
 
-    background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
 
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+            font-family: Georgia, "Times New Roman", serif;
+            color: white;
 
-    font-family: Georgia, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    min-height:100vh;
+            padding: 25px 15px;
+            overflow-x: hidden;
+        }
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+        .container {
+            width: 90%;
+            max-width: 700px;
 
-    color:white;
+            padding: 48px 35px;
+            text-align: center;
 
-}
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
 
-.container{
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
 
-    width:90%;
-    max-width:700px;
+            opacity: 0;
+            animation: elegantEntrance 3s ease-out forwards;
 
-    opacity: 0;
-    animation: elegantEntrance 3s ease-out forwards;
+            position: relative;
+            z-index: 2;
+        }
 
-    background:rgba(255,255,255,.10);
-    backdrop-filter:blur(12px);
+        h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
 
-    border:1px solid rgba(255,255,255,.25);
+        h2 {
+            font-size: 1.35rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+        }
 
-    border-radius:20px;
+        .countdown {
+            margin: 0 auto 30px;
+            padding: 20px;
 
-    padding:50px 35px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
+        }
 
-    text-align:center;
+        .countdown-number {
+            display: block;
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
 
-}
+        .countdown-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            letter-spacing: 1px;
+        }
 
-h1{
+        .welcome-message {
+            font-size: 1.08rem;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
 
-    font-size:3rem;
-    margin-bottom:15px;
+        .button {
+            display: block;
+            width: 100%;
+            max-width: 360px;
 
-}
+            margin: 17px auto;
+            padding: 17px 20px;
 
-h2{
+            background: #b08d57;
+            color: white;
 
-    font-weight:normal;
-    font-size:1.4rem;
-    margin-bottom:35px;
+            border: none;
+            border-radius: 50px;
 
-}
+            font-family: inherit;
+            font-size: 1.05rem;
 
-p{
+            text-decoration: none;
+            cursor: pointer;
 
-    line-height:1.8;
-    font-size:1.1rem;
-    margin-bottom:40px;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
 
-}
+        .button:hover {
+            background: #9a7846;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+        }
 
-.button{
+        .music-button {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 20;
 
-    display:block;
+            padding: 12px 17px;
 
-    width:100%;
+            background: rgba(176, 141, 87, 0.95);
+            color: white;
 
-    max-width:350px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 50px;
 
-    margin:18px auto;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 0.92rem;
 
-    padding:18px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 
-    text-decoration:none;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
 
-    background:#b08d57;
+        .music-button:hover {
+            background: #9a7846;
+            transform: translateY(-2px);
+        }
 
-    color:white;
+        .footer {
+            margin-top: 35px;
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.92;
+        }
 
-    border-radius:50px;
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
 
-    font-size:1.1rem;
+            width: 100%;
+            height: 100%;
 
-    transition:.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
 
-}
+        @keyframes elegantEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
 
-.button:hover{
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    background:#9a7846;
+        @media (max-width: 600px) {
+            body {
+                padding: 75px 12px 20px;
+                background-attachment: scroll;
+                align-items: flex-start;
+            }
 
-}
+            .container {
+                width: 100%;
+                padding: 38px 20px;
+            }
 
-.footer{
+            h1 {
+                font-size: 2.15rem;
+            }
 
-    margin-top:40px;
+            h2 {
+                font-size: 1.1rem;
+            }
 
-    opacity:.9;
+            .countdown-number {
+                font-size: 2.5rem;
+            }
 
-    font-size:1rem;
+            .music-button {
+                top: 14px;
+                right: 12px;
+                padding: 11px 14px;
+                font-size: 0.86rem;
+            }
+        }
 
-}
-@keyframes elegantEntrance {
+        @media (prefers-reduced-motion: reduce) {
+            .container {
+                animation: none;
+                opacity: 1;
+            }
 
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-    
-</style>
-
+            .button,
+            .music-button {
+                transition: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <canvas id="confettiCanvas"></canvas>
 
-<h1>Chelsea & David Bailey</h1>
+    <button
+        id="musicButton"
+        class="music-button"
+        type="button"
+        aria-label="Play or pause our wedding song"
+    >
+        ♪ Play Our Song
+    </button>
 
-<h2>You Are Formally Invited</h2>
+    <audio id="weddingMusic" preload="metadata" loop>
+        <source src="our-song.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+    </audio>
 
-<p>
+    <main class="container">
 
-We are delighted to invite you to celebrate the wedding of Chelsea and David Bailey.
+        <h1>Chelsea & David Bailey</h1>
 
-Your invitation includes the Traditional Ceremony, Church Ceremony, Reception and Party.
+        <h2>You Are Formally Invited</h2>
 
-Please use the options below to access the wedding program and website.
+        <section
+            class="countdown"
+            aria-live="polite"
+        >
+            <span
+                id="countdownNumber"
+                class="countdown-number"
+            >
+                —
+            </span>
 
-</p>
+            <div
+                id="countdownText"
+                class="countdown-text"
+            >
+                Days Until We Say “I Do”
+            </div>
+        </section>
 
-<a class="button" href="program.html">
-📅 View Wedding Schedule
-</a>
+        <p class="welcome-message">
+            We are delighted to invite you to celebrate the wedding
+            of Chelsea and David Bailey.
+            <br><br>
+            Your invitation includes the Traditional Ceremony,
+            Church Ceremony, Reception and Party.
+            <br><br>
+            Please use the options below to access the wedding
+            schedule and website.
+        </p>
 
-<a class="button" href="https://meetthebaileys2026.wixsite.com/my-site" target="_blank">
-🌐 Visit Our Wedding Website
-</a>
+        <a
+            class="button"
+            href="program.html"
+        >
+            📅 View Wedding Schedule
+        </a>
 
-<div class="footer">
+        <a
+            class="button"
+            href="https://meetthebaileys2026.wixsite.com/my-site"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            🌐 Visit Our Wedding Website
+        </a>
 
-We can't wait to celebrate with you in Lagos, Nigeria.
+        <div class="footer">
+            We cannot wait to celebrate with you in Lagos, Nigeria.
+        </div>
 
-</div>
+    </main>
 
-</div>
+    <script>
+        /*
+         * COUNTDOWN
+         * Wedding begins at 11:00 AM in Lagos on October 1, 2026.
+         * Lagos is UTC+1.
+         */
+        const weddingDate = new Date("2026-10-01T11:00:00+01:00");
+
+        const countdownNumber =
+            document.getElementById("countdownNumber");
+
+        const countdownText =
+            document.getElementById("countdownText");
+
+        function updateCountdown() {
+            const now = new Date();
+            const difference = weddingDate.getTime() - now.getTime();
+
+            if (difference > 0) {
+                const days = Math.ceil(
+                    difference / (1000 * 60 * 60 * 24)
+                );
+
+                countdownNumber.textContent = days;
+
+                countdownText.textContent =
+                    days === 1
+                        ? "Day Until We Say “I Do”"
+                        : "Days Until We Say “I Do”";
+            } else {
+                const weddingDayEnd =
+                    new Date("2026-10-02T00:00:00+01:00");
+
+                if (now < weddingDayEnd) {
+                    countdownNumber.textContent = "Today";
+                    countdownText.textContent =
+                        "Today Is the Day!";
+                } else {
+                    countdownNumber.textContent = "Thank You";
+                    countdownText.textContent =
+                        "For Celebrating With Us";
+                }
+            }
+        }
+
+        updateCountdown();
+
+        setInterval(
+            updateCountdown,
+            60 * 60 * 1000
+        );
+
+
+        /*
+         * MUSIC BUTTON
+         */
+        const weddingMusic =
+            document.getElementById("weddingMusic");
+
+        const musicButton =
+            document.getElementById("musicButton");
+
+        let musicIsPlaying = false;
+
+        musicButton.addEventListener("click", async function () {
+            try {
+                if (musicIsPlaying) {
+                    weddingMusic.pause();
+
+                    musicButton.textContent =
+                        "♪ Play Our Song";
+
+                    musicIsPlaying = false;
+                } else {
+                    await weddingMusic.play();
+
+                    musicButton.textContent =
+                        "❚❚ Pause Music";
+
+                    musicIsPlaying = true;
+                }
+            } catch (error) {
+                musicButton.textContent =
+                    "Unable to Play Music";
+
+                console.error(
+                    "Music playback failed:",
+                    error
+                );
+            }
+        });
+
+        weddingMusic.addEventListener("pause", function () {
+            if (!weddingMusic.ended) {
+                musicIsPlaying = false;
+
+                musicButton.textContent =
+                    "♪ Play Our Song";
+            }
+        });
+
+
+        /*
+         * ONE-TIME GOLD CONFETTI
+         *
+         * It appears only the first time this invitation
+         * is opened on a particular browser/device.
+         */
+        const confettiStorageKey =
+            "chelseaDavidFullInviteConfettiShown";
+
+        const prefersReducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+        if (
+            !prefersReducedMotion &&
+            !localStorage.getItem(confettiStorageKey)
+        ) {
+            localStorage.setItem(
+                confettiStorageKey,
+                "true"
+            );
+
+            startConfetti();
+        }
+
+        function startConfetti() {
+            const canvas =
+                document.getElementById("confettiCanvas");
+
+            const context =
+                canvas.getContext("2d");
+
+            let width;
+            let height;
+            let animationFrame;
+
+            const pieces = [];
+            const pieceCount = 80;
+
+            const goldColours = [
+                "#D4AF37",
+                "#F3D675",
+                "#B08D57",
+                "#FFF0B3",
+                "#C9A227"
+            ];
+
+            function resizeCanvas() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+
+                canvas.width =
+                    width * window.devicePixelRatio;
+
+                canvas.height =
+                    height * window.devicePixelRatio;
+
+                canvas.style.width =
+                    width + "px";
+
+                canvas.style.height =
+                    height + "px";
+
+                context.setTransform(
+                    window.devicePixelRatio,
+                    0,
+                    0,
+                    window.devicePixelRatio,
+                    0,
+                    0
+                );
+            }
+
+            function createPiece() {
+                return {
+                    x: Math.random() * width,
+                    y: Math.random() * -height,
+                    width: 5 + Math.random() * 6,
+                    height: 8 + Math.random() * 10,
+                    speed: 1.5 + Math.random() * 2.5,
+                    drift: -0.8 + Math.random() * 1.6,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed:
+                        -0.05 + Math.random() * 0.1,
+                    colour:
+                        goldColours[
+                            Math.floor(
+                                Math.random() *
+                                goldColours.length
+                            )
+                        ]
+                };
+            }
+
+            function drawPiece(piece) {
+                context.save();
+
+                context.translate(
+                    piece.x,
+                    piece.y
+                );
+
+                context.rotate(
+                    piece.rotation
+                );
+
+                context.fillStyle =
+                    piece.colour;
+
+                context.fillRect(
+                    -piece.width / 2,
+                    -piece.height / 2,
+                    piece.width,
+                    piece.height
+                );
+
+                context.restore();
+            }
+
+            function updatePiece(piece) {
+                piece.y += piece.speed;
+                piece.x += piece.drift;
+                piece.rotation +=
+                    piece.rotationSpeed;
+            }
+
+            function animate() {
+                context.clearRect(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+                pieces.forEach(function (piece) {
+                    updatePiece(piece);
+                    drawPiece(piece);
+                });
+
+                animationFrame =
+                    requestAnimationFrame(animate);
+            }
+
+            resizeCanvas();
+
+            for (
+                let index = 0;
+                index < pieceCount;
+                index++
+            ) {
+                pieces.push(createPiece());
+            }
+
+            window.addEventListener(
+                "resize",
+                resizeCanvas
+            );
+
+            animate();
+
+            setTimeout(function () {
+                cancelAnimationFrame(
+                    animationFrame
+                );
+
+                context.clearRect(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+                window.removeEventListener(
+                    "resize",
+                    resizeCanvas
+                );
+            }, 4500);
+        }
+    </script>
 
 </body>
 </html>
