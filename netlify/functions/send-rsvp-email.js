@@ -6,46 +6,94 @@ export async function handler(event) {
 
     const data = JSON.parse(event.body);
 
+    const virtualViewingText =
+      data.virtual_access_requested ? "Yes" : "No";
+
+    const guestVirtualMessage =
+      data.virtual_access_requested
+        ? `
+          <p>
+            You also requested access to the virtual viewing link.
+            We’ll contact you when the YouTube/Zoom link becomes available.
+          </p>
+        `
+        : "";
+
     const response = await resend.emails.send({
       from: "Meet The Baileys <rsvp@meetthebaileys2026.online>",
-      to: ["meetthebaileys2026@gmail.com"], // ← YOUR EMAIL
+      to: ["meetthebaileys2026@gmail.com"],
       subject: `RSVP - ${data.first_name} ${data.last_name} - ${new Date().toLocaleString()}`,
       html: `
         <h2>New RSVP</h2>
+
         <p><strong>First Name:</strong> ${data.first_name}</p>
         <p><strong>Last Name:</strong> ${data.last_name}</p>
         <p><strong>Email:</strong> ${data.email}</p>
-	<p><strong>Attending:</strong> ${data.primary_attending ? "Yes" : "No"}</p>
+        <p><strong>Attending:</strong> ${data.primary_attending ? "Yes" : "No"}</p>
         <p><strong>Guests:</strong> ${data.additional_guest_count}</p>
+        <p><strong>Virtual Viewing Requested:</strong> ${virtualViewingText}</p>
         <p><strong>Time:</strong> ${data.submitted_at}</p>
       `,
     });
-await resend.emails.send({
-  from: "Meet The Baileys <rsvp@meetthebaileys2026.online>",
-  to: [data.email],
-  subject: "RSVP Confirmation",
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #222;">
-    <img 
-      src="https://meetthebaileys2026.online/background.jpg" 
-      alt="Chelsea and David" 
-      style="width: 100%; border-radius: 12px; display: block; margin-bottom: 24px;"
-    />
 
-    <h2 style="text-align: center;">Thank you for your RSVP</h2>
+    await resend.emails.send({
+      from: "Meet The Baileys <rsvp@meetthebaileys2026.online>",
+      to: [data.email],
+      subject: "RSVP Confirmation",
+      html: `
+        <div style="
+          font-family: Arial, sans-serif;
+          max-width: 600px;
+          margin: 0 auto;
+          color: #222;
+        ">
 
-    <p>Hi ${data.first_name},</p>
+          <img
+            src="https://meetthebaileys2026.online/background.jpg"
+            alt="Chelsea and David"
+            style="
+              width: 100%;
+              border-radius: 12px;
+              display: block;
+              margin-bottom: 24px;
+            "
+          />
 
-    <p>Thank you for your response. We’ve recorded your RSVP.</p>
+          <h2 style="text-align: center;">
+            Thank you for your RSVP
+          </h2>
 
-    <p><strong>Attending:</strong> ${data.primary_attending ? "Yes" : "No"}</p>
-    <p><strong>Additional guests:</strong> ${data.additional_guest_count}</p>
+          <p>Hi ${data.first_name},</p>
 
-    <p>With love,<br>Chelsea & David</p>
-  </div>
-  `,
-});
+          <p>
+            Thank you for your response. We’ve recorded your RSVP.
+          </p>
 
+          <p>
+            <strong>Attending:</strong>
+            ${data.primary_attending ? "Yes" : "No"}
+          </p>
+
+          <p>
+            <strong>Additional guests:</strong>
+            ${data.additional_guest_count}
+          </p>
+
+          <p>
+            <strong>Virtual Viewing Requested:</strong>
+            ${virtualViewingText}
+          </p>
+
+          ${guestVirtualMessage}
+
+          <p>
+            With love,<br>
+            Chelsea & David
+          </p>
+
+        </div>
+      `,
+    });
 
     console.log("EMAIL SENT:", response);
 
@@ -53,6 +101,7 @@ await resend.emails.send({
       statusCode: 200,
       body: JSON.stringify({ success: true }),
     };
+
   } catch (err) {
     console.error("EMAIL ERROR:", err);
 
