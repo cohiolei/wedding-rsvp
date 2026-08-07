@@ -1160,23 +1160,26 @@
 
 
         viewScheduleButton.addEventListener(
-            "click",
-            function () {
+    "click",
+    function () {
 
+        invitationView.style.display =
+            "none";
 
-                invitationView.style.display =
-                    "none";
+        scheduleView.style.display =
+            "block";
 
+        scheduleView.classList.add(
+            "visible"
+        );
 
-                scheduleView.classList.add(
-                    "visible"
-                );
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
+    }
+);
 
 
                 /*
