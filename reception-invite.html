@@ -1,178 +1,1066 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chelsea & David Bailey | Reception Invitation</title>
 
-<title>Chelsea & David Bailey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
+        html {
+            scroll-behavior: smooth;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            min-height: 100vh;
 
-body{
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("background.jpg");
 
-    background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
 
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+            font-family: Georgia, "Times New Roman", serif;
+            color: white;
 
-    font-family: Georgia, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    min-height:100vh;
+            padding: 75px 15px 30px;
+            overflow-x: hidden;
+        }
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+        .page {
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
 
-    color:white;
+        .panel {
+            width: 100%;
+            background: rgba(255,255,255,0.10);
 
-}
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
 
-.container{
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
 
-    width:90%;
-    max-width:700px;
+            padding: 48px 35px;
+            text-align: center;
 
-    opacity: 0;
-    animation: elegantEntrance 3s ease-out forwards;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+        }
 
-    background:rgba(255,255,255,.10);
-    backdrop-filter:blur(12px);
+        #invitationView {
+            opacity: 0;
+            animation: elegantEntrance 3s ease-out forwards;
+        }
 
-    border:1px solid rgba(255,255,255,.25);
+        h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
 
-    border-radius:20px;
+        h2 {
+            font-size: 1.35rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+        }
 
-    padding:50px 35px;
+        .welcome-message {
+            font-size: 1.08rem;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
 
-    text-align:center;
+        .countdown {
+            margin: 0 auto 30px;
+            padding: 20px;
 
-}
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 15px;
+        }
 
-h1{
+        .countdown-number {
+            display: block;
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
 
-    font-size:3rem;
-    margin-bottom:15px;
+        .countdown-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            letter-spacing: 1px;
+        }
 
-}
+        .button {
+            display: block;
+            width: 100%;
+            max-width: 360px;
 
-h2{
+            margin: 17px auto;
+            padding: 17px 20px;
 
-    font-weight:normal;
-    font-size:1.4rem;
-    margin-bottom:35px;
+            background: #b08d57;
+            color: white;
 
-}
+            border: none;
+            border-radius: 50px;
 
-p{
+            font-family: inherit;
+            font-size: 1.05rem;
 
-    line-height:1.8;
-    font-size:1.1rem;
-    margin-bottom:40px;
+            text-decoration: none;
+            cursor: pointer;
 
-}
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
 
-.button{
+        .button:hover {
+            background: #9a7846;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+        }
 
-    display:block;
+        .secondary-button {
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
 
-    width:100%;
+        .secondary-button:hover {
+            background: rgba(255,255,255,0.20);
+        }
 
-    max-width:350px;
+        .music-button {
+            position: fixed;
+            top: 18px;
+            right: 18px;
 
-    margin:18px auto;
+            z-index: 100;
 
-    padding:18px;
+            width: auto;
+            padding: 12px 17px;
+            margin: 0;
 
-    text-decoration:none;
+            background: rgba(176,141,87,0.95);
+            color: white;
 
-    background:#b08d57;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 50px;
 
-    color:white;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 0.92rem;
 
-    border-radius:50px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 
-    font-size:1.1rem;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
 
-    transition:.3s;
+        .music-button:hover {
+            background: #9a7846;
+            transform: translateY(-2px);
+        }
 
-}
+        #scheduleView {
+            display: none;
+            opacity: 0;
+        }
 
-.button:hover{
+        #scheduleView.visible {
+            display: block;
+            animation: scheduleEntrance 0.8s ease-out forwards;
+        }
 
-    background:#9a7846;
+        .schedule-title {
+            font-size: 1.35rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
 
-}
+        .date {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
 
-.footer{
+        .date-day {
+            display: block;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
-    margin-top:40px;
+        .date-month {
+            display: block;
+            margin-top: 4px;
+            font-size: 2.1rem;
+            letter-spacing: 3px;
+        }
 
-    opacity:.9;
+        .date-year {
+            display: block;
+            margin-top: 4px;
+            font-size: 1.25rem;
+            letter-spacing: 4px;
+        }
 
-    font-size:1rem;
+        .info-card,
+        .event-card {
+            margin-top: 20px;
+            padding: 25px 20px;
 
-}
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.20);
+            border-radius: 16px;
+        }
 
-@keyframes elegantEntrance {
+        .section-label {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
 
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
+        .venue-name {
+            margin-bottom: 7px;
+            font-size: 1.35rem;
+            font-weight: bold;
+        }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-    
-</style>
+        .venue-address {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
 
+        .directions-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 24px;
+
+            background: #b08d57;
+            color: white;
+
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .directions-button:hover {
+            background: #9a7846;
+        }
+
+        .schedule-heading {
+            margin-top: 38px;
+            margin-bottom: 10px;
+
+            font-size: 1.4rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .event-name {
+            margin-bottom: 8px;
+            font-size: 1.35rem;
+        }
+
+        .event-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .arrival-note {
+            margin-top: 28px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .footer {
+            margin-top: 35px;
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.92;
+        }
+
+        .footer-names {
+            display: block;
+            margin-top: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        @keyframes elegantEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scheduleEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width:600px) {
+            body {
+                padding: 75px 12px 20px;
+                background-attachment: scroll;
+                align-items: flex-start;
+            }
+
+            .page {
+                width: 100%;
+            }
+
+            .panel {
+                padding: 38px 20px;
+            }
+
+            h1 {
+                font-size: 2.15rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+
+            .music-button {
+                top: 14px;
+                right: 12px;
+                padding: 11px 14px;
+                font-size: 0.86rem;
+            }
+
+            .date-month {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #invitationView {
+                animation: none;
+                opacity: 1;
+            }
+
+            #scheduleView.visible {
+                animation: none;
+                opacity: 1;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <canvas id="confettiCanvas"></canvas>
 
-<h1>Chelsea & David Bailey</h1>
+    <button
+        id="musicButton"
+        class="music-button"
+        type="button"
+    >
+        ♪ Play Our Song
+    </button>
 
-<h2>You Are Formally Invited</h2>
+    <audio
+        id="weddingMusic"
+        preload="metadata"
+        loop
+    >
+        <source
+            src="our-song.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
 
-<p>
+    <main class="page">
 
-We are delighted to invite you to celebrate the wedding reception of Chelsea and David Bailey.
+        <!-- RECEPTION INVITATION -->
 
-Your invitation includes the Reception and Party.
+        <section
+            id="invitationView"
+            class="panel"
+        >
 
-Please use the options below to access the reception program and wedding website.
+            <h1>
+                Chelsea & David Bailey
+            </h1>
 
-</p>
+            <h2>
+                You Are Formally Invited
+            </h2>
 
-<a class="button" href="reception-program.html">
-📅 View Reception Schedule
-</a>
+            <section class="countdown">
 
-<a class="button" href="https://meetthebaileys2026.wixsite.com/my-site" target="_blank">
-🌐 Visit Our Wedding Website
-</a>
+                <span
+                    id="countdownNumber"
+                    class="countdown-number"
+                >
+                    —
+                </span>
 
-<div class="footer">
+                <div
+                    id="countdownText"
+                    class="countdown-text"
+                >
+                    Days Until We Celebrate
+                </div>
 
-We can't wait to celebrate with you in Lagos, Nigeria.
+            </section>
 
-</div>
+            <p class="welcome-message">
 
-</div>
+                We are delighted to invite you to celebrate
+                the wedding reception of Chelsea and David Bailey.
+
+                <br><br>
+
+                Your invitation includes the Reception and Party.
+
+                <br><br>
+
+                Please use the options below to access
+                the reception schedule and wedding website.
+
+            </p>
+
+            <button
+                id="viewScheduleButton"
+                class="button"
+                type="button"
+            >
+                📅 View Reception Schedule
+            </button>
+
+            <a
+                class="button"
+                href="https://meetthebaileys2026.wixsite.com/my-site"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                🌐 Visit Our Wedding Website
+            </a>
+
+            <div class="footer">
+                We can't wait to celebrate with you in Lagos, Nigeria.
+            </div>
+
+        </section>
+
+
+        <!-- RECEPTION SCHEDULE -->
+
+        <section
+            id="scheduleView"
+            class="panel"
+        >
+
+            <h1>
+                Chelsea & David Bailey
+            </h1>
+
+            <h2 class="schedule-title">
+                Reception Schedule
+            </h2>
+
+            <div class="date">
+
+                <span class="date-day">
+                    Thursday
+                </span>
+
+                <span class="date-month">
+                    October 1
+                </span>
+
+                <span class="date-year">
+                    2026
+                </span>
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="section-label">
+                    Venue
+                </div>
+
+                <!-- UPDATE VENUE DETAILS HERE -->
+
+                <div class="venue-name">
+                    Venue Name
+                </div>
+
+                <div class="venue-address">
+                    Street Address
+                    <br>
+                    City, Lagos, Nigeria
+                </div>
+
+                <!-- UPDATE GOOGLE MAPS LINK HERE -->
+
+                <a
+                    class="directions-button"
+                    href="https://maps.google.com/?q=YOUR+VENUE+HERE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    📍 Get Directions
+                </a>
+
+            </div>
+
+            <h3 class="schedule-heading">
+                Reception & Party
+            </h3>
+
+            <div class="event-card">
+
+                <div class="event-name">
+                    Reception & Party
+                </div>
+
+                <div class="event-time">
+                    3:00 PM
+                </div>
+
+            </div>
+
+            <p class="arrival-note">
+                Please arrive at least 30 minutes before
+                the scheduled start time.
+            </p>
+
+            <button
+                id="backToInvitationButton"
+                class="button secondary-button"
+                type="button"
+            >
+                ← Back to Invitation
+            </button>
+
+            <div class="footer">
+
+                Thank you for celebrating
+                this special day with us.
+
+                <span class="footer-names">
+                    Chelsea & David Bailey
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* COUNTDOWN */
+
+        const weddingDate =
+            new Date("2026-10-01T15:00:00+01:00");
+
+        const countdownNumber =
+            document.getElementById("countdownNumber");
+
+        const countdownText =
+            document.getElementById("countdownText");
+
+
+        function updateCountdown() {
+
+            const now = new Date();
+
+            const difference =
+                weddingDate.getTime() - now.getTime();
+
+
+            if (difference > 0) {
+
+                const days =
+                    Math.ceil(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+                countdownNumber.textContent =
+                    days;
+
+                countdownText.textContent =
+                    days === 1
+                        ? "Day Until We Celebrate"
+                        : "Days Until We Celebrate";
+
+            } else {
+
+                const weddingDayEnd =
+                    new Date(
+                        "2026-10-02T00:00:00+01:00"
+                    );
+
+                if (now < weddingDayEnd) {
+
+                    countdownNumber.textContent =
+                        "Today";
+
+                    countdownText.textContent =
+                        "Today Is the Day!";
+
+                } else {
+
+                    countdownNumber.textContent =
+                        "Thank You";
+
+                    countdownText.textContent =
+                        "For Celebrating With Us";
+                }
+            }
+        }
+
+
+        updateCountdown();
+
+        setInterval(
+            updateCountdown,
+            60 * 60 * 1000
+        );
+
+
+        /* MUSIC */
+
+        const weddingMusic =
+            document.getElementById(
+                "weddingMusic"
+            );
+
+        const musicButton =
+            document.getElementById(
+                "musicButton"
+            );
+
+
+        musicButton.addEventListener(
+            "click",
+            function () {
+
+                if (weddingMusic.paused) {
+
+                    weddingMusic.play()
+                        .then(function () {
+
+                            musicButton.textContent =
+                                "⏸ Pause Music";
+
+                        })
+                        .catch(function (error) {
+
+                            console.error(
+                                "Music playback error:",
+                                error
+                            );
+
+                        });
+
+                } else {
+
+                    weddingMusic.pause();
+
+                    musicButton.textContent =
+                        "♪ Play Our Song";
+                }
+            }
+        );
+
+
+        /* INVITATION / SCHEDULE */
+
+        const invitationView =
+            document.getElementById(
+                "invitationView"
+            );
+
+        const scheduleView =
+            document.getElementById(
+                "scheduleView"
+            );
+
+        const viewScheduleButton =
+            document.getElementById(
+                "viewScheduleButton"
+            );
+
+        const backToInvitationButton =
+            document.getElementById(
+                "backToInvitationButton"
+            );
+
+
+        function showSchedule() {
+
+            invitationView.style.display =
+                "none";
+
+            scheduleView.style.display =
+                "block";
+
+            scheduleView.classList.remove(
+                "visible"
+            );
+
+            void scheduleView.offsetWidth;
+
+            scheduleView.classList.add(
+                "visible"
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+        function showInvitation() {
+
+            scheduleView.classList.remove(
+                "visible"
+            );
+
+            scheduleView.style.display =
+                "none";
+
+            invitationView.style.display =
+                "block";
+
+            invitationView.style.opacity =
+                "1";
+
+            invitationView.style.animation =
+                "none";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+        viewScheduleButton.addEventListener(
+            "click",
+            showSchedule
+        );
+
+        backToInvitationButton.addEventListener(
+            "click",
+            showInvitation
+        );
+
+
+        /* CONFETTI */
+
+        const prefersReducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+
+        if (!prefersReducedMotion) {
+
+            window.addEventListener(
+                "load",
+                function () {
+
+                    setTimeout(
+                        startConfetti,
+                        600
+                    );
+
+                }
+            );
+        }
+
+
+        function startConfetti() {
+
+            const canvas =
+                document.getElementById(
+                    "confettiCanvas"
+                );
+
+            if (!canvas) {
+                return;
+            }
+
+            const context =
+                canvas.getContext("2d");
+
+            if (!context) {
+                return;
+            }
+
+            let width;
+            let height;
+            let animationFrame;
+
+            const pieces = [];
+            const pieceCount = 80;
+
+            const goldColours = [
+                "#D4AF37",
+                "#F3D675",
+                "#B08D57",
+                "#FFF0B3",
+                "#C9A227"
+            ];
+
+
+            function resizeCanvas() {
+
+                width =
+                    window.innerWidth;
+
+                height =
+                    window.innerHeight;
+
+                const ratio =
+                    window.devicePixelRatio || 1;
+
+                canvas.width =
+                    width * ratio;
+
+                canvas.height =
+                    height * ratio;
+
+                canvas.style.width =
+                    width + "px";
+
+                canvas.style.height =
+                    height + "px";
+
+                context.setTransform(
+                    ratio,
+                    0,
+                    0,
+                    ratio,
+                    0,
+                    0
+                );
+            }
+
+
+            function createPiece() {
+
+                return {
+                    x:
+                        Math.random() * width,
+
+                    y:
+                        Math.random() * -height,
+
+                    width:
+                        5 + Math.random() * 6,
+
+                    height:
+                        8 + Math.random() * 10,
+
+                    speed:
+                        1.5 + Math.random() * 2.5,
+
+                    drift:
+                        -0.8 + Math.random() * 1.6,
+
+                    rotation:
+                        Math.random() *
+                        Math.PI *
+                        2,
+
+                    rotationSpeed:
+                        -0.05 +
+                        Math.random() * 0.1,
+
+                    colour:
+                        goldColours[
+                            Math.floor(
+                                Math.random() *
+                                goldColours.length
+                            )
+                        ]
+                };
+            }
+
+
+            function drawPiece(piece) {
+
+                context.save();
+
+                context.translate(
+                    piece.x,
+                    piece.y
+                );
+
+                context.rotate(
+                    piece.rotation
+                );
+
+                context.fillStyle =
+                    piece.colour;
+
+                context.fillRect(
+                    -piece.width / 2,
+                    -piece.height / 2,
+                    piece.width,
+                    piece.height
+                );
+
+                context.restore();
+            }
+
+
+            function updatePiece(piece) {
+
+                piece.y +=
+                    piece.speed;
+
+                piece.x +=
+                    piece.drift;
+
+                piece.rotation +=
+                    piece.rotationSpeed;
+            }
+
+
+            function animate() {
+
+                context.clearRect(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+                pieces.forEach(
+                    function (piece) {
+
+                        updatePiece(piece);
+                        drawPiece(piece);
+
+                    }
+                );
+
+                animationFrame =
+                    requestAnimationFrame(
+                        animate
+                    );
+            }
+
+
+            resizeCanvas();
+
+
+            for (
+                let i = 0;
+                i < pieceCount;
+                i++
+            ) {
+
+                pieces.push(
+                    createPiece()
+                );
+            }
+
+
+            window.addEventListener(
+                "resize",
+                resizeCanvas
+            );
+
+
+            animate();
+
+
+            setTimeout(
+                function () {
+
+                    cancelAnimationFrame(
+                        animationFrame
+                    );
+
+                    context.clearRect(
+                        0,
+                        0,
+                        width,
+                        height
+                    );
+
+                    window.removeEventListener(
+                        "resize",
+                        resizeCanvas
+                    );
+
+                },
+                2500
+            );
+        }
+
+    </script>
 
 </body>
 </html>
