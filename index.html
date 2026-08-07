@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RSVP - Meet The Baileys</title>
+
   <style>
     :root {
       --card-bg: rgba(255, 255, 255, 0.9);
@@ -158,6 +159,36 @@
       display: none;
     }
 
+    /* VIRTUAL VIEWING */
+
+    .virtual-box {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .virtual-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .virtual-option input {
+      width: auto;
+      margin: 3px 0 0;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    /* SUCCESS MODAL */
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -204,7 +235,47 @@
       text-decoration: underline;
     }
 
+    /* MUSIC BUTTON */
+
+    .music-button {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1000;
+
+      width: auto;
+      padding: 12px 17px;
+      margin: 0;
+
+      background: rgba(176, 141, 87, 0.95);
+      color: white;
+
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50px;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.92rem;
+
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .music-button:hover {
+      background: #9a7846;
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+
     @media (max-width: 560px) {
+
+      body {
+        padding: 75px 16px 32px;
+      }
+
       .card {
         padding: 28px 18px;
       }
@@ -216,241 +287,787 @@
       .row {
         flex-direction: column;
       }
+
+      .music-button {
+        top: 14px;
+        right: 12px;
+        padding: 11px 14px;
+        font-size: 0.86rem;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- MUSIC -->
+
+  <button
+    id="musicButton"
+    class="music-button"
+    type="button"
+    aria-label="Play or pause our wedding song"
+  >
+    ♪ Play Our Song
+  </button>
+
+  <audio id="weddingMusic" preload="metadata" loop>
+    <source src="our-song.mp3" type="audio/mpeg">
+  </audio>
+
+
+  <!-- RSVP CARD -->
+
   <div class="card">
+
     <h1>Meet The Baileys</h1>
+
     <p class="subtitle">
       Kindly find your invitation below and submit your RSVP.
     </p>
 
+
+    <!-- NAME LOOKUP -->
+
     <div id="lookupWrap" class="lookup-wrap">
-      <input id="first" placeholder="First Name" />
-      <input id="last" placeholder="Last Name" />
-      <button id="findBtn" type="button">Find Invitation</button>
+
+      <input
+        id="first"
+        placeholder="First Name"
+      />
+
+      <input
+        id="last"
+        placeholder="Last Name"
+      />
+
+      <button id="findBtn" type="button">
+        Find Invitation
+      </button>
+
     </div>
+
+
+    <!-- RSVP -->
 
     <div id="rsvpSection" class="hidden">
+
       <div class="guest-box">
-        <h2 id="guestName" class="guest-name"></h2>
-        <p id="guestNote" class="guest-note"></p>
 
-        <input id="email" type="email" placeholder="Email for confirmation" />
+        <h2
+          id="guestName"
+          class="guest-name"
+        ></h2>
 
-        <div id="extraGuests" class="hidden">
-          <p id="extraGuestsLabel" class="section-title">Number of additional guests</p>
-          <input id="guestCount" type="number" min="0" max="20" value="0" />
+        <p
+          id="guestNote"
+          class="guest-note"
+        ></p>
+
+
+        <input
+          id="email"
+          type="email"
+          placeholder="Email for confirmation"
+        />
+
+
+        <!-- ADDITIONAL GUESTS -->
+
+        <div
+          id="extraGuests"
+          class="hidden"
+        >
+
+          <p
+            id="extraGuestsLabel"
+            class="section-title"
+          >
+            Number of additional guests
+          </p>
+
+          <input
+            id="guestCount"
+            type="number"
+            min="0"
+            max="20"
+            value="0"
+          />
+
         </div>
 
-        <p class="section-title">Will you attend?</p>
+
+        <!-- VIRTUAL VIEWING -->
+
+        <div class="virtual-box">
+
+          <p
+            class="section-title"
+            style="margin-top:0;"
+          >
+            Virtual Viewing
+          </p>
+
+          <label class="virtual-option">
+
+            <input
+              id="virtualAccess"
+              type="checkbox"
+            >
+
+            <span>
+              I would like to be contacted when the
+              YouTube/Zoom viewing link becomes available.
+            </span>
+
+          </label>
+
+        </div>
+
+
+        <!-- ATTENDANCE -->
+
+        <p class="section-title">
+          Will you attend?
+        </p>
+
         <div class="row">
-          <button id="yesBtn" type="button">Yes</button>
-          <button id="noBtn" type="button" class="secondary">No</button>
+
+          <button
+            id="yesBtn"
+            type="button"
+          >
+            Yes
+          </button>
+
+          <button
+            id="noBtn"
+            type="button"
+            class="secondary"
+          >
+            No
+          </button>
+
         </div>
 
-        <button id="editSearchBtn" type="button" class="secondary" style="margin-top:14px;">
+
+        <button
+          id="editSearchBtn"
+          type="button"
+          class="secondary"
+          style="margin-top:14px;"
+        >
           Search Another Name
         </button>
+
       </div>
     </div>
 
-    <p id="message" class="message"></p>
+
+    <p
+      id="message"
+      class="message"
+    ></p>
+
+
     <p class="small-note">
-      Already submitted before? Search your name again and submit a new response to update it.
+      Already submitted before? Search your name again and
+      submit a new response to update it.
     </p>
+
   </div>
 
-  <div id="successModal" class="modal-backdrop hidden">
+
+  <!-- SUCCESS POPUP -->
+
+  <div
+    id="successModal"
+    class="modal-backdrop hidden"
+  >
+
     <div class="modal">
-      <h2>Thank you for your response</h2>
-      <p>Your RSVP has been received successfully.</p>
-      <a href="https://meetthebaileys2026.wixsite.com/my-site" target="_blank" rel="noopener noreferrer">
+
+      <h2>
+        Thank you for your response
+      </h2>
+
+      <p>
+        Your RSVP has been received successfully.
+      </p>
+
+      <a
+        href="https://meetthebaileys2026.wixsite.com/my-site"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Visit our website
       </a>
+
       <div style="margin-top:20px;">
-        <button id="closeModalBtn" type="button">Close</button>
+
+        <button
+          id="closeModalBtn"
+          type="button"
+        >
+          Close
+        </button>
+
       </div>
+
     </div>
+
   </div>
 
+
+  <!-- RSVP SYSTEM -->
+
   <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-    const supabaseUrl = 'https://ckuifenortjzehpkruqj.supabase.co';
-    const supabaseKey = 'sb_publishable_fhicYcgxgp9_felxHTTHmA_EJHeXLky';
+    import {
+      createClient
+    } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const supabaseUrl =
+      'https://ckuifenortjzehpkruqj.supabase.co';
+
+    const supabaseKey =
+      'sb_publishable_fhicYcgxgp9_felxHTTHmA_EJHeXLky';
+
+    const supabase =
+      createClient(
+        supabaseUrl,
+        supabaseKey
+      );
+
 
     let currentGuest = null;
 
-    const firstEl = document.getElementById('first');
-    const lastEl = document.getElementById('last');
-    const emailEl = document.getElementById('email');
-    const guestCountEl = document.getElementById('guestCount');
-    const guestNameEl = document.getElementById('guestName');
-    const guestNoteEl = document.getElementById('guestNote');
-    const rsvpSectionEl = document.getElementById('rsvpSection');
-    const extraGuestsEl = document.getElementById('extraGuests');
-    const extraGuestsLabelEl = document.getElementById('extraGuestsLabel');
-    const messageEl = document.getElementById('message');
-    const lookupWrapEl = document.getElementById('lookupWrap');
-    const successModalEl = document.getElementById('successModal');
 
-    function showMessage(text, isError = true) {
+    const firstEl =
+      document.getElementById('first');
+
+    const lastEl =
+      document.getElementById('last');
+
+    const emailEl =
+      document.getElementById('email');
+
+    const guestCountEl =
+      document.getElementById('guestCount');
+
+    const guestNameEl =
+      document.getElementById('guestName');
+
+    const guestNoteEl =
+      document.getElementById('guestNote');
+
+    const rsvpSectionEl =
+      document.getElementById('rsvpSection');
+
+    const extraGuestsEl =
+      document.getElementById('extraGuests');
+
+    const extraGuestsLabelEl =
+      document.getElementById('extraGuestsLabel');
+
+    const messageEl =
+      document.getElementById('message');
+
+    const lookupWrapEl =
+      document.getElementById('lookupWrap');
+
+    const successModalEl =
+      document.getElementById('successModal');
+
+    const virtualAccessEl =
+      document.getElementById('virtualAccess');
+
+
+    function showMessage(
+      text,
+      isError = true
+    ) {
+
       messageEl.textContent = text;
-      messageEl.style.color = isError ? '#7a1f1f' : '#2f6b3c';
+
+      messageEl.style.color =
+        isError
+          ? '#7a1f1f'
+          : '#2f6b3c';
     }
 
+
     function resetLookup() {
+
       currentGuest = null;
+
       firstEl.value = '';
       lastEl.value = '';
       emailEl.value = '';
+
       guestCountEl.value = 0;
+
+      virtualAccessEl.checked = false;
+
       guestNameEl.textContent = '';
       guestNoteEl.textContent = '';
-      rsvpSectionEl.classList.add('hidden');
-      lookupWrapEl.classList.remove('hidden-after-match');
+
+      rsvpSectionEl.classList.add(
+        'hidden'
+      );
+
+      lookupWrapEl.classList.remove(
+        'hidden-after-match'
+      );
+
       showMessage('', false);
     }
 
+
     function showModal() {
-      successModalEl.classList.remove('hidden');
+
+      successModalEl.classList.remove(
+        'hidden'
+      );
     }
+
 
     function hideModal() {
-      successModalEl.classList.add('hidden');
+
+      successModalEl.classList.add(
+        'hidden'
+      );
     }
 
+
     async function checkGuest() {
-      const first = firstEl.value.trim().toLowerCase();
-      const last = lastEl.value.trim().toLowerCase();
+
+      const first =
+        firstEl.value
+          .trim()
+          .toLowerCase();
+
+      const last =
+        lastEl.value
+          .trim()
+          .toLowerCase();
+
 
       if (!first || !last) {
-        showMessage('Enter your first and last name.');
+
+        showMessage(
+          'Enter your first and last name.'
+        );
+
         return;
       }
 
-      const { data, error } = await supabase
+
+      const {
+        data,
+        error
+      } = await supabase
+
         .from('guests')
+
         .select('*')
-        .eq('first_name_lower', first)
-        .eq('last_name_lower', last)
+
+        .eq(
+          'first_name_lower',
+          first
+        )
+
+        .eq(
+          'last_name_lower',
+          last
+        )
+
         .maybeSingle();
+
 
       if (error) {
-        showMessage('Lookup failed.');
+
+        showMessage(
+          'Lookup failed.'
+        );
+
         return;
       }
+
 
       if (!data) {
-        showMessage('We could not find your invitation.');
+
+        showMessage(
+          'We could not find your invitation.'
+        );
+
         return;
       }
 
-      currentGuest = data;
-      guestNameEl.textContent = `${data.first_name} ${data.last_name}`;
 
-      const maxGuests = data.max_additional_guests || 0;
+      currentGuest = data;
+
+
+      guestNameEl.textContent =
+        `${data.first_name} ${data.last_name}`;
+
+
+      const maxGuests =
+        data.max_additional_guests || 0;
+
+
       if (maxGuests > 0) {
-        guestNoteEl.textContent = `We found your invitation. You may RSVP for yourself and up to ${maxGuests} additional guest${maxGuests > 1 ? 's' : ''}.`;
-        extraGuestsEl.classList.remove('hidden');
-        guestCountEl.max = maxGuests;
-        guestCountEl.value = 0;
-        extraGuestsLabelEl.textContent = `Number of additional guests (0-${maxGuests})`;
+
+        guestNoteEl.textContent =
+          `We found your invitation. You may RSVP for yourself and up to ${maxGuests} additional guest${maxGuests > 1 ? 's' : ''}.`;
+
+
+        extraGuestsEl.classList.remove(
+          'hidden'
+        );
+
+
+        guestCountEl.max =
+          maxGuests;
+
+
+        guestCountEl.value =
+          0;
+
+
+        extraGuestsLabelEl.textContent =
+          `Number of additional guests (0-${maxGuests})`;
+
       } else {
-        guestNoteEl.textContent = 'We found your invitation.';
-        extraGuestsEl.classList.add('hidden');
-        guestCountEl.value = 0;
+
+        guestNoteEl.textContent =
+          'We found your invitation.';
+
+
+        extraGuestsEl.classList.add(
+          'hidden'
+        );
+
+
+        guestCountEl.value =
+          0;
       }
 
-      const { data: existingRsvp } = await supabase
+
+      const {
+        data: existingRsvp
+      } = await supabase
+
         .from('rsvps')
+
         .select('*')
-        .eq('guest_id', data.id)
+
+        .eq(
+          'guest_id',
+          data.id
+        )
+
         .maybeSingle();
 
+
       if (existingRsvp) {
-        emailEl.value = existingRsvp.email || '';
-        guestCountEl.value = existingRsvp.additional_guest_count || 0;
-        showMessage('Your existing RSVP was found. You can update it below.', false);
+
+        emailEl.value =
+          existingRsvp.email || '';
+
+
+        guestCountEl.value =
+          existingRsvp.additional_guest_count || 0;
+
+
+        virtualAccessEl.checked =
+          existingRsvp.virtual_access_requested === true;
+
+
+        showMessage(
+          'Your existing RSVP was found. You can update it below.',
+          false
+        );
+
       } else {
+
         emailEl.value = '';
+
         guestCountEl.value = 0;
+
+        virtualAccessEl.checked = false;
+
         showMessage('', false);
       }
 
-      lookupWrapEl.classList.add('hidden-after-match');
-      rsvpSectionEl.classList.remove('hidden');
+
+      lookupWrapEl.classList.add(
+        'hidden-after-match'
+      );
+
+
+      rsvpSectionEl.classList.remove(
+        'hidden'
+      );
     }
+
 
     async function submitRSVP(attending) {
+
+
       if (!currentGuest) {
-        showMessage('Find your invitation first.');
+
+        showMessage(
+          'Find your invitation first.'
+        );
+
         return;
       }
 
-      const email = emailEl.value.trim();
-      const count = parseInt(guestCountEl.value || '0', 10);
-      const maxGuests = currentGuest.max_additional_guests || 0;
+
+      const email =
+        emailEl.value.trim();
+
+
+      const count =
+        parseInt(
+          guestCountEl.value || '0',
+          10
+        );
+
+
+      const maxGuests =
+        currentGuest.max_additional_guests || 0;
+
+
+      const virtualAccess =
+        virtualAccessEl.checked;
+
 
       if (!email) {
-        showMessage('Enter your email.');
+
+        showMessage(
+          'Enter your email.'
+        );
+
         return;
       }
 
-      if (Number.isNaN(count) || count < 0 || count > maxGuests) {
-        showMessage('Enter a valid additional guest count.');
+
+      if (
+        Number.isNaN(count) ||
+        count < 0 ||
+        count > maxGuests
+      ) {
+
+        showMessage(
+          'Enter a valid additional guest count.'
+        );
+
         return;
       }
+
 
       const payload = {
-        guest_id: currentGuest.id,
-        email,
-        primary_attending: attending,
-        additional_guest_count: count
+
+        guest_id:
+          currentGuest.id,
+
+        email:
+
+          email,
+
+        primary_attending:
+          attending,
+
+        additional_guest_count:
+          count,
+
+        virtual_access_requested:
+          virtualAccess
       };
 
-      const { error } = await supabase
+
+      const {
+        error
+      } = await supabase
+
         .from('rsvps')
-        .upsert([payload], { onConflict: 'guest_id' });
 
-     if (error) {
-  showMessage('Error submitting RSVP.');
-  return;
-}
+        .upsert(
+          [payload],
+          {
+            onConflict:
+              'guest_id'
+          }
+        );
 
-await fetch("/.netlify/functions/send-rsvp-email", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    first_name: currentGuest.first_name,
-    last_name: currentGuest.last_name,
-    email: email,
-    primary_attending: attending,
-    additional_guest_count: count,
-    submitted_at: new Date().toLocaleString()
-  })
-});
 
-showMessage('', false);
-showModal();
-resetLookup();
+      if (error) {
+
+        console.error(error);
+
+        showMessage(
+          'Error submitting RSVP.'
+        );
+
+        return;
+      }
+
+
+      await fetch(
+        "/.netlify/functions/send-rsvp-email",
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              first_name:
+                currentGuest.first_name,
+
+              last_name:
+                currentGuest.last_name,
+
+              email:
+                email,
+
+              primary_attending:
+                attending,
+
+              additional_guest_count:
+                count,
+
+              virtual_access_requested:
+                virtualAccess,
+
+              submitted_at:
+                new Date().toLocaleString()
+            })
+        }
+      );
+
+
+      showMessage('', false);
+
+      showModal();
+
+      resetLookup();
     }
 
-    document.getElementById('findBtn').addEventListener('click', checkGuest);
-    document.getElementById('yesBtn').addEventListener('click', () => submitRSVP(true));
-    document.getElementById('noBtn').addEventListener('click', () => submitRSVP(false));
-    document.getElementById('editSearchBtn').addEventListener('click', resetLookup);
-    document.getElementById('closeModalBtn').addEventListener('click', hideModal);
 
-    successModalEl.addEventListener('click', (e) => {
-      if (e.target === successModalEl) hideModal();
-    });
+    document
+      .getElementById('findBtn')
+      .addEventListener(
+        'click',
+        checkGuest
+      );
+
+
+    document
+      .getElementById('yesBtn')
+      .addEventListener(
+        'click',
+        () =>
+          submitRSVP(true)
+      );
+
+
+    document
+      .getElementById('noBtn')
+      .addEventListener(
+        'click',
+        () =>
+          submitRSVP(false)
+      );
+
+
+    document
+      .getElementById('editSearchBtn')
+      .addEventListener(
+        'click',
+        resetLookup
+      );
+
+
+    document
+      .getElementById('closeModalBtn')
+      .addEventListener(
+        'click',
+        hideModal
+      );
+
+
+    successModalEl.addEventListener(
+      'click',
+      (e) => {
+
+        if (
+          e.target ===
+          successModalEl
+        ) {
+
+          hideModal();
+        }
+      }
+    );
+
   </script>
+
+
+  <!-- MUSIC -->
+
+  <script>
+
+    const weddingMusic =
+      document.getElementById(
+        "weddingMusic"
+      );
+
+
+    const musicButton =
+      document.getElementById(
+        "musicButton"
+      );
+
+
+    musicButton.addEventListener(
+      "click",
+      function () {
+
+
+        if (
+          weddingMusic.paused
+        ) {
+
+          weddingMusic.play();
+
+
+          musicButton.textContent =
+            "⏸ Pause Music";
+
+        } else {
+
+          weddingMusic.pause();
+
+
+          musicButton.textContent =
+            "♪ Play Our Song";
+        }
+
+      }
+    );
+
+  </script>
+
 </body>
 </html>
