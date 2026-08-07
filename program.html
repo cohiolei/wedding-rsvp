@@ -194,11 +194,61 @@
                 font-size: 1.75rem;
             }
         }
+
+        .music-button {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 20;
+
+    padding: 12px 17px;
+
+    background: rgba(176, 141, 87, 0.95);
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.92rem;
+
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.music-button:hover {
+    background: #9a7846;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .music-button {
+        top: 14px;
+        right: 12px;
+        padding: 11px 14px;
+        font-size: 0.86rem;
+    }
+}
     </style>
 </head>
 
 <body>
+<button
+    id="musicButton"
+    class="music-button"
+    type="button"
+    aria-label="Play or pause our wedding song"
+>
+    ♪ Play Our Song
+</button>
 
+<audio id="weddingMusic" preload="metadata" loop>
+    <source src="our-song.mp3" type="audio/mpeg">
+</audio>
     <main class="page">
 
         <section class="main-card">
@@ -266,6 +316,27 @@
         </section>
 
     </main>
+<script>
+    const weddingMusic = document.getElementById("weddingMusic");
+    const musicButton = document.getElementById("musicButton");
 
+    musicButton.addEventListener("click", function () {
+
+        if (weddingMusic.paused) {
+
+            weddingMusic.play();
+
+            musicButton.textContent = "⏸ Pause Music";
+
+        } else {
+
+            weddingMusic.pause();
+
+            musicButton.textContent = "♪ Play Our Song";
+
+        }
+
+    });
+</script>
 </body>
 </html>
