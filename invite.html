@@ -416,30 +416,26 @@ musicButton.onclick = function () {
 
 
         /*
-         * ONE-TIME GOLD CONFETTI
-         *
-         * It appears only the first time this invitation
-         * is opened on a particular browser/device.
-         */
-        const confettiStorageKey =
-            "chelseaDavidFullInviteConfettiShown";
+ * GOLD CONFETTI
+ *
+ * Plays every time the page loads,
+ * unless the visitor prefers reduced motion.
+ */
 
-        const prefersReducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
+const prefersReducedMotion =
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-        if (
-            !prefersReducedMotion &&
-            !localStorage.getItem(confettiStorageKey)
-        ) {
-            localStorage.setItem(
-                confettiStorageKey,
-                "true"
-            );
+if (!prefersReducedMotion) {
 
-            startConfetti();
-        }
+    window.addEventListener("load", function () {
+
+        setTimeout(startConfetti, 600);
+
+    });
+
+}
 
         function startConfetti() {
             const canvas =
@@ -592,7 +588,7 @@ musicButton.onclick = function () {
                     "resize",
                     resizeCanvas
                 );
-            }, 4500);
+            }, 2500);
         }
     </script>
 
