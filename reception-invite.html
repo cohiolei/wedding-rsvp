@@ -1,1065 +1,3191 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Chelsea & David Bailey | Reception Invitation</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            min-height: 100vh;
-
-            background:
-                linear-gradient(
-                    rgba(0, 0, 0, 0.55),
-                    rgba(0, 0, 0, 0.55)
-                ),
-                url("background.jpg");
-
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-
-            font-family: Georgia, "Times New Roman", serif;
-            color: white;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 75px 15px 30px;
-            overflow-x: hidden;
-        }
-
-        .page {
-            width: 90%;
-            max-width: 700px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .panel {
-            width: 100%;
-            background: rgba(255,255,255,0.10);
-
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 20px;
-
-            padding: 48px 35px;
-            text-align: center;
-
-            box-shadow: 0 18px 50px rgba(0,0,0,0.18);
-        }
-
-        #invitationView {
-            opacity: 0;
-            animation: elegantEntrance 3s ease-out forwards;
-        }
-
-        h1 {
-            font-size: 3rem;
-            line-height: 1.15;
-            margin-bottom: 15px;
-        }
-
-        h2 {
-            font-size: 1.35rem;
-            font-weight: normal;
-            letter-spacing: 1px;
-            margin-bottom: 28px;
-        }
-
-        .welcome-message {
-            font-size: 1.08rem;
-            line-height: 1.8;
-            margin-bottom: 35px;
-        }
-
-        .countdown {
-            margin: 0 auto 30px;
-            padding: 20px;
-
-            background: rgba(255,255,255,0.10);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 15px;
-        }
-
-        .countdown-number {
-            display: block;
-            font-size: 3rem;
-            font-weight: bold;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .countdown-text {
-            font-size: 1rem;
-            line-height: 1.5;
-            letter-spacing: 1px;
-        }
-
-        .button {
-            display: block;
-            width: 100%;
-            max-width: 360px;
-
-            margin: 17px auto;
-            padding: 17px 20px;
-
-            background: #b08d57;
-            color: white;
-
-            border: none;
-            border-radius: 50px;
-
-            font-family: inherit;
-            font-size: 1.05rem;
-
-            text-decoration: none;
-            cursor: pointer;
-
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-        .button:hover {
-            background: #9a7846;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.22);
-        }
-
-        .secondary-button {
-            background: rgba(255,255,255,0.13);
-            border: 1px solid rgba(255,255,255,0.25);
-        }
-
-        .secondary-button:hover {
-            background: rgba(255,255,255,0.20);
-        }
-
-        .music-button {
-            position: fixed;
-            top: 18px;
-            right: 18px;
-
-            z-index: 100;
-
-            width: auto;
-            padding: 12px 17px;
-            margin: 0;
-
-            background: rgba(176,141,87,0.95);
-            color: white;
-
-            border: 1px solid rgba(255,255,255,0.35);
-            border-radius: 50px;
-
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 0.92rem;
-
-            cursor: pointer;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease;
-        }
-
-        .music-button:hover {
-            background: #9a7846;
-            transform: translateY(-2px);
-        }
-
-        #scheduleView {
-            display: none;
-            opacity: 0;
-        }
-
-        #scheduleView.visible {
-            display: block;
-            animation: scheduleEntrance 0.8s ease-out forwards;
-        }
-
-        .schedule-title {
-            font-size: 1.35rem;
-            font-weight: normal;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-        }
-
-        .date {
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .date-day {
-            display: block;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .date-month {
-            display: block;
-            margin-top: 4px;
-            font-size: 2.1rem;
-            letter-spacing: 3px;
-        }
-
-        .date-year {
-            display: block;
-            margin-top: 4px;
-            font-size: 1.25rem;
-            letter-spacing: 4px;
-        }
-
-        .info-card,
-        .event-card {
-            margin-top: 20px;
-            padding: 25px 20px;
-
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.20);
-            border-radius: 16px;
-        }
-
-        .section-label {
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.85;
-        }
-
-        .venue-name {
-            margin-bottom: 7px;
-            font-size: 1.35rem;
-            font-weight: bold;
-        }
-
-        .venue-address {
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .directions-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 13px 24px;
-
-            background: #b08d57;
-            color: white;
-
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .directions-button:hover {
-            background: #9a7846;
-        }
-
-        .schedule-heading {
-            margin-top: 38px;
-            margin-bottom: 10px;
-
-            font-size: 1.4rem;
-            font-weight: normal;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .event-name {
-            margin-bottom: 8px;
-            font-size: 1.35rem;
-        }
-
-        .event-time {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .arrival-note {
-            margin-top: 28px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .footer {
-            margin-top: 35px;
-            font-size: 1rem;
-            line-height: 1.7;
-            opacity: 0.92;
-        }
-
-        .footer-names {
-            display: block;
-            margin-top: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        #confettiCanvas {
-            position: fixed;
-            inset: 0;
-
-            width: 100%;
-            height: 100%;
-
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        @keyframes elegantEntrance {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scheduleEntrance {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width:600px) {
-            body {
-                padding: 75px 12px 20px;
-                background-attachment: scroll;
-                align-items: flex-start;
-            }
-
-            .page {
-                width: 100%;
-            }
-
-            .panel {
-                padding: 38px 20px;
-            }
-
-            h1 {
-                font-size: 2.15rem;
-            }
-
-            h2 {
-                font-size: 1.1rem;
-            }
-
-            .countdown-number {
-                font-size: 2.5rem;
-            }
-
-            .music-button {
-                top: 14px;
-                right: 12px;
-                padding: 11px 14px;
-                font-size: 0.86rem;
-            }
-
-            .date-month {
-                font-size: 1.75rem;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            #invitationView {
-                animation: none;
-                opacity: 1;
-            }
-
-            #scheduleView.visible {
-                animation: none;
-                opacity: 1;
-            }
-        }
-
-    </style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Chelsea & David Bailey | Reception Invitation
+  </title>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+
+      min-height: 100vh;
+
+      background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.55)
+        ),
+        url("background.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      color: white;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding:
+        75px 15px 30px;
+
+      overflow-x: hidden;
+
+    }
+
+
+    .page {
+
+      width: 90%;
+
+      max-width: 700px;
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+
+    .panel {
+
+      width: 100%;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.10
+        );
+
+      backdrop-filter:
+        blur(12px);
+
+      -webkit-backdrop-filter:
+        blur(12px);
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.25
+        );
+
+      border-radius:
+        20px;
+
+      padding:
+        48px 35px;
+
+      text-align:
+        center;
+
+      box-shadow:
+        0 18px 50px
+        rgba(
+          0,
+          0,
+          0,
+          0.18
+        );
+
+    }
+
+
+    #invitationView {
+
+      opacity: 0;
+
+      animation:
+        elegantEntrance
+        3s ease-out
+        forwards;
+
+    }
+
+
+    #scheduleView,
+    #tableLookupView {
+
+      display: none;
+
+      opacity: 0;
+
+    }
+
+
+    #scheduleView.visible,
+    #tableLookupView.visible {
+
+      display: block;
+
+      animation:
+        scheduleEntrance
+        0.8s ease-out
+        forwards;
+
+    }
+
+
+    h1 {
+
+      font-size:
+        3rem;
+
+      line-height:
+        1.15;
+
+      margin-bottom:
+        15px;
+
+    }
+
+
+    h2 {
+
+      font-size:
+        1.35rem;
+
+      font-weight:
+        normal;
+
+      letter-spacing:
+        1px;
+
+      margin-bottom:
+        28px;
+
+    }
+
+
+    .welcome-message {
+
+      font-size:
+        1.08rem;
+
+      line-height:
+        1.8;
+
+      margin-bottom:
+        35px;
+
+    }
+
+
+
+    /* =========================
+       COUNTDOWN TIMER
+    ========================= */
+
+
+    .countdown {
+
+      margin:
+        0 auto 30px;
+
+      padding:
+        22px 15px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.10
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.18
+        );
+
+      border-radius:
+        15px;
+
+    }
+
+
+    .countdown-title {
+
+      font-size:
+        0.9rem;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        2px;
+
+      margin-bottom:
+        18px;
+
+      opacity:
+        0.9;
+
+    }
+
+
+    .timer {
+
+      display: flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+    }
+
+
+    .timer-box {
+
+      min-width:
+        82px;
+
+      padding:
+        10px 8px;
+
+    }
+
+
+    .timer-number {
+
+      display: block;
+
+      font-size:
+        2.6rem;
+
+      font-weight:
+        bold;
+
+      line-height:
+        1;
+
+    }
+
+
+    .timer-label {
+
+      display: block;
+
+      margin-top:
+        8px;
+
+      font-size:
+        0.72rem;
+
+      letter-spacing:
+        1.5px;
+
+      text-transform:
+        uppercase;
+
+      opacity:
+        0.85;
+
+    }
+
+
+    .timer-colon {
+
+      font-size:
+        2rem;
+
+      font-weight:
+        bold;
+
+      margin-top:
+        -18px;
+
+    }
+
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+
+    .button {
+
+      display: block;
+
+      width: 100%;
+
+      max-width: 360px;
+
+      margin:
+        17px auto;
+
+      padding:
+        17px 20px;
+
+      background:
+        #b08d57;
+
+      color:
+        white;
+
+      border:
+        none;
+
+      border-radius:
+        50px;
+
+      font-family:
+        inherit;
+
+      font-size:
+        1.05rem;
+
+      text-decoration:
+        none;
+
+      cursor:
+        pointer;
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+    }
+
+
+    .button:hover {
+
+      background:
+        #9a7846;
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 8px 20px
+        rgba(
+          0,
+          0,
+          0,
+          0.22
+        );
+
+    }
+
+
+    .secondary-button {
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.13
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.25
+        );
+
+    }
+
+
+    .secondary-button:hover {
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.20
+        );
+
+    }
+
+
+
+    /* =========================
+       MUSIC BUTTON
+    ========================= */
+
+
+    .music-button {
+
+      position:
+        fixed;
+
+      top:
+        18px;
+
+      right:
+        18px;
+
+      z-index:
+        100;
+
+      width:
+        auto;
+
+      padding:
+        12px 17px;
+
+      margin:
+        0;
+
+      background:
+        rgba(
+          176,
+          141,
+          87,
+          0.95
+        );
+
+      color:
+        white;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.35
+        );
+
+      border-radius:
+        50px;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        0.92rem;
+
+      cursor:
+        pointer;
+
+      box-shadow:
+        0 6px 18px
+        rgba(
+          0,
+          0,
+          0,
+          0.25
+        );
+
+    }
+
+
+    .music-button:hover {
+
+      background:
+        #9a7846;
+
+    }
+
+
+
+    /* =========================
+       SCHEDULE
+    ========================= */
+
+
+    .schedule-title {
+
+      font-size:
+        1.35rem;
+
+      font-weight:
+        normal;
+
+      letter-spacing:
+        2px;
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        24px;
+
+    }
+
+
+    .date {
+
+      margin-bottom:
+        30px;
+
+      line-height:
+        1.6;
+
+    }
+
+
+    .date-day {
+
+      display:
+        block;
+
+      font-size:
+        1rem;
+
+      letter-spacing:
+        2px;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .date-month {
+
+      display:
+        block;
+
+      margin-top:
+        4px;
+
+      font-size:
+        2.1rem;
+
+      letter-spacing:
+        3px;
+
+    }
+
+
+    .date-year {
+
+      display:
+        block;
+
+      margin-top:
+        4px;
+
+      font-size:
+        1.25rem;
+
+      letter-spacing:
+        4px;
+
+    }
+
+
+    .info-card,
+    .event-card {
+
+      margin-top:
+        20px;
+
+      padding:
+        25px 20px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.12
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.20
+        );
+
+      border-radius:
+        16px;
+
+    }
+
+
+    .section-label {
+
+      margin-bottom:
+        10px;
+
+      font-size:
+        0.9rem;
+
+      letter-spacing:
+        2px;
+
+      text-transform:
+        uppercase;
+
+      opacity:
+        0.85;
+
+    }
+
+
+    .venue-name {
+
+      margin-bottom:
+        7px;
+
+      font-size:
+        1.35rem;
+
+      font-weight:
+        bold;
+
+    }
+
+
+    .venue-address {
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.7;
+
+    }
+
+
+    .directions-button {
+
+      display:
+        inline-block;
+
+      margin-top:
+        20px;
+
+      padding:
+        13px 24px;
+
+      background:
+        #b08d57;
+
+      color:
+        white;
+
+      border-radius:
+        50px;
+
+      text-decoration:
+        none;
+
+      font-size:
+        1rem;
+
+    }
+
+
+    .directions-button:hover {
+
+      background:
+        #9a7846;
+
+    }
+
+
+    .schedule-heading {
+
+      margin-top:
+        38px;
+
+      margin-bottom:
+        10px;
+
+      font-size:
+        1.4rem;
+
+      font-weight:
+        normal;
+
+      letter-spacing:
+        2px;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .event-name {
+
+      margin-bottom:
+        8px;
+
+      font-size:
+        1.35rem;
+
+    }
+
+
+    .event-time {
+
+      font-size:
+        1.8rem;
+
+      font-weight:
+        bold;
+
+    }
+
+
+    .arrival-note {
+
+      margin-top:
+        28px;
+
+      font-size:
+        0.95rem;
+
+      line-height:
+        1.6;
+
+      opacity:
+        0.9;
+
+    }
+
+
+
+    /* =========================
+       TABLE LOOKUP
+    ========================= */
+
+
+    .lookup-intro {
+
+      font-size:
+        1.05rem;
+
+      line-height:
+        1.7;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .search-input {
+
+      display:
+        block;
+
+      width:
+        100%;
+
+      max-width:
+        420px;
+
+      margin:
+        0 auto 15px;
+
+      padding:
+        16px 20px;
+
+      border-radius:
+        50px;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.40
+        );
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.14
+        );
+
+      color:
+        white;
+
+      font-family:
+        inherit;
+
+      font-size:
+        1rem;
+
+      text-align:
+        center;
+
+      outline:
+        none;
+
+    }
+
+
+    .search-input::placeholder {
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.70
+        );
+
+    }
+
+
+    .search-input:focus {
+
+      border-color:
+        white;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.20
+        );
+
+    }
+
+
+    .lookup-message {
+
+      min-height:
+        24px;
+
+      margin-top:
+        20px;
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.6;
+
+    }
+
+
+    .lookup-results {
+
+      margin-top:
+        20px;
+
+    }
+
+
+    .result-card {
+
+      max-width:
+        480px;
+
+      margin:
+        12px auto;
+
+      padding:
+        22px 20px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.12
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.22
+        );
+
+      border-radius:
+        16px;
+
+    }
+
+
+    .result-name {
+
+      font-size:
+        1.1rem;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .result-table {
+
+      font-size:
+        1.8rem;
+
+      font-weight:
+        bold;
+
+      color:
+        #F3D675;
+
+    }
+
+
+    .lookup-note {
+
+      margin-top:
+        22px;
+
+      font-size:
+        0.9rem;
+
+      line-height:
+        1.6;
+
+      opacity:
+        0.85;
+
+    }
+
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+
+    .footer {
+
+      margin-top:
+        35px;
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.7;
+
+      opacity:
+        0.92;
+
+    }
+
+
+    .footer-names {
+
+      display:
+        block;
+
+      margin-top:
+        8px;
+
+      font-size:
+        1.2rem;
+
+      font-weight:
+        bold;
+
+    }
+
+
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
+
+    #confettiCanvas {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      pointer-events:
+        none;
+
+      z-index:
+        50;
+
+    }
+
+
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+
+    @keyframes elegantEntrance {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          translateY(25px);
+
+      }
+
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          translateY(0);
+
+      }
+
+    }
+
+
+    @keyframes scheduleEntrance {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          translateY(15px);
+
+      }
+
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          translateY(0);
+
+      }
+
+    }
+
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+
+    @media (max-width:600px) {
+
+      body {
+
+        padding:
+          75px 12px 20px;
+
+        background-attachment:
+          scroll;
+
+        align-items:
+          flex-start;
+
+      }
+
+
+      .page {
+
+        width:
+          100%;
+
+      }
+
+
+      .panel {
+
+        padding:
+          38px 20px;
+
+      }
+
+
+      h1 {
+
+        font-size:
+          2.15rem;
+
+      }
+
+
+      h2 {
+
+        font-size:
+          1.1rem;
+
+      }
+
+
+      .timer-number {
+
+        font-size:
+          2rem;
+
+      }
+
+
+      .timer-box {
+
+        min-width:
+          68px;
+
+        padding:
+          8px 4px;
+
+      }
+
+
+      .timer-colon {
+
+        font-size:
+          1.6rem;
+
+      }
+
+
+      .music-button {
+
+        top:
+          14px;
+
+        right:
+          12px;
+
+        padding:
+          11px 14px;
+
+        font-size:
+          0.86rem;
+
+      }
+
+
+      .date-month {
+
+        font-size:
+          1.75rem;
+
+      }
+
+    }
+
+
+
+    @media (
+      prefers-reduced-motion:
+      reduce
+    ) {
+
+      #invitationView {
+
+        animation:
+          none;
+
+        opacity:
+          1;
+
+      }
+
+
+      #scheduleView.visible,
+      #tableLookupView.visible {
+
+        animation:
+          none;
+
+        opacity:
+          1;
+
+      }
+
+    }
+
+  </style>
 </head>
+
+
 
 <body>
 
-    <canvas id="confettiCanvas"></canvas>
 
-    <button
-        id="musicButton"
-        class="music-button"
+  <canvas
+    id="confettiCanvas"
+  ></canvas>
+
+
+
+  <button
+    id="musicButton"
+    class="music-button"
+    type="button"
+  >
+    ♪ Play Our Song
+  </button>
+
+
+
+  <audio
+    id="weddingMusic"
+    preload="metadata"
+    loop
+  >
+
+    <source
+      src="our-song.mp3"
+      type="audio/mpeg"
+    >
+
+  </audio>
+
+
+
+  <main class="page">
+
+
+    <!-- =========================
+         INVITATION
+    ========================== -->
+
+
+    <section
+      id="invitationView"
+      class="panel"
+    >
+
+
+      <h1>
+        Chelsea & David Bailey
+      </h1>
+
+
+      <h2>
+        You Are Formally Invited
+      </h2>
+
+
+
+      <!-- COUNTDOWN -->
+
+
+      <section
+        class="countdown"
+      >
+
+
+        <div
+          class="countdown-title"
+          id="countdownTitle"
+        >
+          Until We Celebrate
+        </div>
+
+
+
+        <div
+          class="timer"
+          id="timer"
+        >
+
+
+          <div
+            class="timer-box"
+          >
+
+            <span
+              id="countdownHours"
+              class="timer-number"
+            >
+              00
+            </span>
+
+            <span
+              class="timer-label"
+            >
+              Hours
+            </span>
+
+          </div>
+
+
+
+          <div
+            class="timer-colon"
+          >
+            :
+          </div>
+
+
+
+          <div
+            class="timer-box"
+          >
+
+            <span
+              id="countdownMinutes"
+              class="timer-number"
+            >
+              00
+            </span>
+
+            <span
+              class="timer-label"
+            >
+              Minutes
+            </span>
+
+          </div>
+
+
+
+          <div
+            class="timer-colon"
+          >
+            :
+          </div>
+
+
+
+          <div
+            class="timer-box"
+          >
+
+            <span
+              id="countdownSeconds"
+              class="timer-number"
+            >
+              00
+            </span>
+
+            <span
+              class="timer-label"
+            >
+              Seconds
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      <p
+        class="welcome-message"
+      >
+
+        We are delighted to invite you to celebrate
+        the wedding reception of Chelsea and David Bailey.
+
+        <br><br>
+
+        Your invitation includes the Reception and Party.
+
+        <br><br>
+
+        Please use the options below to access
+        the reception schedule, find your table,
+        and visit our wedding website.
+
+      </p>
+
+
+
+      <button
+        id="viewScheduleButton"
+        class="button"
         type="button"
+      >
+        📅 View Reception Schedule
+      </button>
+
+
+
+      <button
+        id="findTableButton"
+        class="button"
+        type="button"
+      >
+        🔎 Find My Table
+      </button>
+
+
+
+      <a
+        class="button"
+        href="https://meetthebaileys2026.wixsite.com/my-site"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        🌐 Visit Our Wedding Website
+      </a>
+
+
+
+      <div
+        class="footer"
+      >
+
+        We can't wait to celebrate with you
+        in Lagos, Nigeria.
+
+      </div>
+
+
+    </section>
+
+
+
+
+
+    <!-- =========================
+         RECEPTION SCHEDULE
+    ========================== -->
+
+
+    <section
+      id="scheduleView"
+      class="panel"
     >
-        ♪ Play Our Song
-    </button>
 
-    <audio
-        id="weddingMusic"
-        preload="metadata"
-        loop
+
+      <h1>
+        Chelsea & David Bailey
+      </h1>
+
+
+      <h2
+        class="schedule-title"
+      >
+        Reception Schedule
+      </h2>
+
+
+
+      <div
+        class="date"
+      >
+
+        <span
+          class="date-day"
+        >
+          Thursday
+        </span>
+
+
+        <span
+          class="date-month"
+        >
+          October 1
+        </span>
+
+
+        <span
+          class="date-year"
+        >
+          2026
+        </span>
+
+      </div>
+
+
+
+      <div
+        class="info-card"
+      >
+
+
+        <div
+          class="section-label"
+        >
+          Venue
+        </div>
+
+
+        <div
+          class="venue-name"
+        >
+          The Darlington Hall
+        </div>
+
+
+        <div
+          class="venue-address"
+        >
+
+          Plot CDE Industrial Cres,
+          off Town Planning Way
+
+          <br>
+
+          Ilupeju, Lagos, Nigeria
+
+        </div>
+
+
+
+        <a
+          class="directions-button"
+          href="https://maps.app.goo.gl/CumhvdkccPdVQfjZ8"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📍 Get Directions
+        </a>
+
+
+      </div>
+
+
+
+      <h3
+        class="schedule-heading"
+      >
+        Reception & Party
+      </h3>
+
+
+
+      <div
+        class="event-card"
+      >
+
+
+        <div
+          class="event-name"
+        >
+          Reception & Party
+        </div>
+
+
+        <div
+          class="event-time"
+        >
+          2:30 PM
+        </div>
+
+
+      </div>
+
+
+
+      <p
+        class="arrival-note"
+      >
+        Come early, get comfortable,
+        and don’t miss a moment.
+      </p>
+
+
+
+      <button
+        id="backToInvitationButton"
+        class="button secondary-button"
+        type="button"
+      >
+        Back to Invitation ←
+      </button>
+
+
+
+      <div
+        class="footer"
+      >
+
+        Thank you for celebrating
+        this special day with us.
+
+
+        <span
+          class="footer-names"
+        >
+          Chelsea & David Bailey
+        </span>
+
+      </div>
+
+
+    </section>
+
+
+
+
+
+    <!-- =========================
+         FIND MY TABLE
+    ========================== -->
+
+
+    <section
+      id="tableLookupView"
+      class="panel"
     >
-        <source
-            src="our-song.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
 
-    <main class="page">
 
-        <!-- RECEPTION INVITATION -->
+      <h1>
+        Chelsea & David Bailey
+      </h1>
 
-        <section
-            id="invitationView"
-            class="panel"
-        >
 
-            <h1>
-                Chelsea & David Bailey
-            </h1>
+      <h2
+        class="schedule-title"
+      >
+        Find My Table
+      </h2>
 
-            <h2>
-                You Are Formally Invited
-            </h2>
 
-            <section class="countdown">
 
-                <span
-                    id="countdownNumber"
-                    class="countdown-number"
-                >
-                    —
-                </span>
+      <p
+        class="lookup-intro"
+      >
 
-                <div
-                    id="countdownText"
-                    class="countdown-text"
-                >
-                    Days Until We Celebrate
-                </div>
+        Enter your first name,
+        last name, or full name
+        to find your assigned
+        reception table.
 
-            </section>
+      </p>
 
-            <p class="welcome-message">
 
-                We are delighted to invite you to celebrate
-                the wedding reception of Chelsea and David Bailey.
 
-                <br><br>
+      <input
+        id="guestSearchInput"
+        class="search-input"
+        type="search"
+        placeholder="Enter your name"
+        autocomplete="name"
+      >
 
-                Your invitation includes the Reception and Party.
 
-                <br><br>
 
-                Please use the options below to access
-                the reception schedule and wedding website.
+      <button
+        id="searchTableButton"
+        class="button"
+        type="button"
+      >
+        Find My Table
+      </button>
 
-            </p>
 
-            <button
-                id="viewScheduleButton"
-                class="button"
-                type="button"
-            >
-                📅 View Reception Schedule
-            </button>
 
-            <a
-                class="button"
-                href="https://meetthebaileys2026.wixsite.com/my-site"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                🌐 Visit Our Wedding Website
-            </a>
+      <div
+        id="lookupMessage"
+        class="lookup-message"
+        aria-live="polite"
+      ></div>
 
-            <div class="footer">
-                We can't wait to celebrate with you in Lagos, Nigeria.
-            </div>
 
-        </section>
 
+      <div
+        id="lookupResults"
+        class="lookup-results"
+      ></div>
 
-        <!-- RECEPTION SCHEDULE -->
 
-        <section
-            id="scheduleView"
-            class="panel"
-        >
 
-            <h1>
-                Chelsea & David Bailey
-            </h1>
+      <p
+        class="lookup-note"
+      >
 
-            <h2 class="schedule-title">
-                Reception Schedule
-            </h2>
+        If you are unable to find your name,
+        please check the spelling or speak with
+        a member of the reception team.
 
-            <div class="date">
+      </p>
 
-                <span class="date-day">
-                    Thursday
-                </span>
 
-                <span class="date-month">
-                    October 1
-                </span>
 
-                <span class="date-year">
-                    2026
-                </span>
+      <button
+        id="backFromLookupButton"
+        class="button secondary-button"
+        type="button"
+      >
+        Back to Invitation ←
+      </button>
 
-            </div>
 
-            <div class="info-card">
+    </section>
 
-                <div class="section-label">
-                    Venue
-                </div>
 
-                <!-- UPDATE VENUE DETAILS HERE -->
+  </main>
 
-                <div class="venue-name">
-                    The Darlington Hall
-                </div>
 
-                <div class="venue-address">
-                    Plot CDE Industrial Cres, off Town Planning Way
-                    <br>
-                    Ilupeju, Lagos, Nigeria
-                </div>
 
-                <!-- UPDATE GOOGLE MAPS LINK HERE -->
 
-                <a
-                    class="directions-button"
-                    href="https://maps.app.goo.gl/CumhvdkccPdVQfjZ8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    📍 Get Directions
-                </a>
 
-            </div>
+  <script>
 
-            <h3 class="schedule-heading">
-                Reception & Party
-            </h3>
 
-            <div class="event-card">
+    /* =========================
+       SUPABASE
+    ========================= */
 
-                <div class="event-name">
-                    Reception & Party
-                </div>
 
-                <div class="event-time">
-                    2:30 PM
-                </div>
+    const SUPABASE_URL =
+      "https://ckuifenortjzehpkruqj.supabase.co";
 
-            </div>
 
-            <p class="arrival-note">
-                Come early, get comfortable, and don’t miss a moment.
-            </p>
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrdWlmZW5vcnRqemVocGtydXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4OTM3MTcsImV4cCI6MjA5MjQ2OTcxN30.qhCIsPpW7gE9F_u-Y9-0wQUn62aKTa_hrZ34svp9IkI";
 
-            <button
-                id="backToInvitationButton"
-                class="button secondary-button"
-                type="button"
-            >
-                ← Back to Invitation
-            </button>
 
-            <div class="footer">
 
-                Thank you for celebrating
-                this special day with us.
 
-                <span class="footer-names">
-                    Chelsea & David Bailey
-                </span>
 
-            </div>
+    /* =========================
+       COUNTDOWN
+    ========================= */
 
-        </section>
 
-    </main>
+    const weddingDate =
+      new Date(
+        "2026-10-01T14:30:00+01:00"
+      );
 
 
-    <script>
+    const countdownHours =
+      document.getElementById(
+        "countdownHours"
+      );
 
-        /* COUNTDOWN */
 
-        const weddingDate =
-            new Date("2026-10-01T15:00:00+01:00");
+    const countdownMinutes =
+      document.getElementById(
+        "countdownMinutes"
+      );
 
-        const countdownNumber =
-            document.getElementById("countdownNumber");
 
-        const countdownText =
-            document.getElementById("countdownText");
+    const countdownSeconds =
+      document.getElementById(
+        "countdownSeconds"
+      );
 
 
-        function updateCountdown() {
+    const countdownTitle =
+      document.getElementById(
+        "countdownTitle"
+      );
 
-            const now = new Date();
 
-            const difference =
-                weddingDate.getTime() - now.getTime();
+    const timer =
+      document.getElementById(
+        "timer"
+      );
 
 
-            if (difference > 0) {
 
-                const days =
-                    Math.ceil(
-                        difference /
-                        (1000 * 60 * 60 * 24)
-                    );
+    function padNumber(
+      number
+    ) {
 
-                countdownNumber.textContent =
-                    days;
+      return String(
+        number
+      ).padStart(
+        2,
+        "0"
+      );
 
-                countdownText.textContent =
-                    days === 1
-                        ? "Day Until We Celebrate"
-                        : "Days Until We Celebrate";
+    }
 
-            } else {
 
-                const weddingDayEnd =
-                    new Date(
-                        "2026-10-02T00:00:00+01:00"
-                    );
 
-                if (now < weddingDayEnd) {
+    function updateCountdown() {
 
-                    countdownNumber.textContent =
-                        "Today";
 
-                    countdownText.textContent =
-                        "Today Is the Day!";
+      const now =
+        new Date();
 
-                } else {
 
-                    countdownNumber.textContent =
-                        "Thank You";
+      const difference =
+        weddingDate.getTime()
+        -
+        now.getTime();
 
-                    countdownText.textContent =
-                        "For Celebrating With Us";
-                }
-            }
+
+
+      if (
+        difference > 0
+      ) {
+
+
+        const totalSeconds =
+          Math.floor(
+            difference / 1000
+          );
+
+
+        const hours =
+          Math.floor(
+            totalSeconds / 3600
+          );
+
+
+        const minutes =
+          Math.floor(
+            (
+              totalSeconds % 3600
+            )
+            /
+            60
+          );
+
+
+        const seconds =
+          totalSeconds % 60;
+
+
+
+        countdownHours.textContent =
+          padNumber(
+            hours
+          );
+
+
+        countdownMinutes.textContent =
+          padNumber(
+            minutes
+          );
+
+
+        countdownSeconds.textContent =
+          padNumber(
+            seconds
+          );
+
+
+      }
+
+
+      else {
+
+
+        const weddingDayEnd =
+          new Date(
+            "2026-10-02T00:00:00+01:00"
+          );
+
+
+        if (
+          now < weddingDayEnd
+        ) {
+
+
+          countdownTitle.textContent =
+            "Today Is The Day!";
+
+
+          timer.style.display =
+            "none";
+
+
         }
 
 
-        updateCountdown();
-
-        setInterval(
-            updateCountdown,
-            60 * 60 * 1000
-        );
+        else {
 
 
-        /* MUSIC */
-
-        const weddingMusic =
-            document.getElementById(
-                "weddingMusic"
-            );
-
-        const musicButton =
-            document.getElementById(
-                "musicButton"
-            );
+          countdownTitle.textContent =
+            "Thank You For Celebrating With Us";
 
 
-        musicButton.addEventListener(
-            "click",
+          timer.style.display =
+            "none";
+
+
+        }
+
+
+      }
+
+
+    }
+
+
+
+    updateCountdown();
+
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
+
+
+
+
+    /* =========================
+       MUSIC
+    ========================= */
+
+
+    const weddingMusic =
+      document.getElementById(
+        "weddingMusic"
+      );
+
+
+    const musicButton =
+      document.getElementById(
+        "musicButton"
+      );
+
+
+
+    musicButton.addEventListener(
+      "click",
+
+      function () {
+
+
+        if (
+          weddingMusic.paused
+        ) {
+
+
+          weddingMusic
+          .play()
+
+          .then(
             function () {
 
-                if (weddingMusic.paused) {
+              musicButton.textContent =
+                "⏸ Pause Music";
 
-                    weddingMusic.play()
-                        .then(function () {
-
-                            musicButton.textContent =
-                                "⏸ Pause Music";
-
-                        })
-                        .catch(function (error) {
-
-                            console.error(
-                                "Music playback error:",
-                                error
-                            );
-
-                        });
-
-                } else {
-
-                    weddingMusic.pause();
-
-                    musicButton.textContent =
-                        "♪ Play Our Song";
-                }
             }
+          )
+
+          .catch(
+            function (error) {
+
+              console.error(
+                "Music playback error:",
+                error
+              );
+
+            }
+          );
+
+
+        }
+
+
+        else {
+
+
+          weddingMusic.pause();
+
+
+          musicButton.textContent =
+            "♪ Play Our Song";
+
+
+        }
+
+
+      }
+    );
+
+
+
+
+
+    /* =========================
+       VIEW NAVIGATION
+    ========================= */
+
+
+    const invitationView =
+      document.getElementById(
+        "invitationView"
+      );
+
+
+    const scheduleView =
+      document.getElementById(
+        "scheduleView"
+      );
+
+
+    const tableLookupView =
+      document.getElementById(
+        "tableLookupView"
+      );
+
+
+    const viewScheduleButton =
+      document.getElementById(
+        "viewScheduleButton"
+      );
+
+
+    const findTableButton =
+      document.getElementById(
+        "findTableButton"
+      );
+
+
+    const backToInvitationButton =
+      document.getElementById(
+        "backToInvitationButton"
+      );
+
+
+    const backFromLookupButton =
+      document.getElementById(
+        "backFromLookupButton"
+      );
+
+
+
+    function hideAllViews() {
+
+
+      invitationView.style.display =
+        "none";
+
+
+      scheduleView.style.display =
+        "none";
+
+
+      scheduleView.classList.remove(
+        "visible"
+      );
+
+
+      tableLookupView.style.display =
+        "none";
+
+
+      tableLookupView.classList.remove(
+        "visible"
+      );
+
+
+    }
+
+
+
+    function showSchedule() {
+
+
+      hideAllViews();
+
+
+      scheduleView.style.display =
+        "block";
+
+
+      void scheduleView.offsetWidth;
+
+
+      scheduleView.classList.add(
+        "visible"
+      );
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+    }
+
+
+
+    function showTableLookup() {
+
+
+      hideAllViews();
+
+
+      tableLookupView.style.display =
+        "block";
+
+
+      void tableLookupView.offsetWidth;
+
+
+      tableLookupView.classList.add(
+        "visible"
+      );
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+      setTimeout(
+
+        function () {
+
+          document
+          .getElementById(
+            "guestSearchInput"
+          )
+          .focus();
+
+        },
+
+        250
+
+      );
+
+
+    }
+
+
+
+    function showInvitation() {
+
+
+      scheduleView.classList.remove(
+        "visible"
+      );
+
+
+      tableLookupView.classList.remove(
+        "visible"
+      );
+
+
+      scheduleView.style.display =
+        "none";
+
+
+      tableLookupView.style.display =
+        "none";
+
+
+      invitationView.style.display =
+        "block";
+
+
+      invitationView.style.opacity =
+        "1";
+
+
+      invitationView.style.animation =
+        "none";
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+    }
+
+
+
+    viewScheduleButton.addEventListener(
+      "click",
+      showSchedule
+    );
+
+
+    findTableButton.addEventListener(
+      "click",
+      showTableLookup
+    );
+
+
+    backToInvitationButton.addEventListener(
+      "click",
+      showInvitation
+    );
+
+
+    backFromLookupButton.addEventListener(
+      "click",
+      showInvitation
+    );
+
+
+
+
+
+    /* =========================
+       TABLE LOOKUP
+    ========================= */
+
+
+    const guestSearchInput =
+      document.getElementById(
+        "guestSearchInput"
+      );
+
+
+    const searchTableButton =
+      document.getElementById(
+        "searchTableButton"
+      );
+
+
+    const lookupMessage =
+      document.getElementById(
+        "lookupMessage"
+      );
+
+
+    const lookupResults =
+      document.getElementById(
+        "lookupResults"
+      );
+
+
+
+    function formatTableNumber(
+      tableNumber
+    ) {
+
+
+      const value =
+        String(
+          tableNumber || ""
+        ).trim();
+
+
+
+      if (
+        !value
+      ) {
+
+        return (
+          "Table assignment unavailable"
+        );
+
+      }
+
+
+
+      if (
+        value.toLowerCase()
+        ===
+        "vip"
+        ||
+        value.toLowerCase()
+        ===
+        "vip table"
+      ) {
+
+        return (
+          "VIP Table"
+        );
+
+      }
+
+
+
+      if (
+        value
+        .toLowerCase()
+        .startsWith(
+          "table "
+        )
+      ) {
+
+        return value;
+
+      }
+
+
+
+      return (
+        "Table "
+        +
+        value
+      );
+
+
+    }
+
+
+
+    function displayResults(
+      guests
+    ) {
+
+
+      lookupResults.innerHTML =
+        "";
+
+
+
+      guests.forEach(
+
+        function (
+          guest
+        ) {
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+
+          card.className =
+            "result-card";
+
+
+
+          const guestName =
+            document.createElement(
+              "div"
+            );
+
+
+          guestName.className =
+            "result-name";
+
+
+          guestName.textContent =
+            guest.guest_name;
+
+
+
+          const guestTable =
+            document.createElement(
+              "div"
+            );
+
+
+          guestTable.className =
+            "result-table";
+
+
+          guestTable.textContent =
+            formatTableNumber(
+              guest.table_number
+            );
+
+
+
+          card.appendChild(
+            guestName
+          );
+
+
+          card.appendChild(
+            guestTable
+          );
+
+
+          lookupResults.appendChild(
+            card
+          );
+
+
+        }
+
+      );
+
+
+    }
+
+
+
+    async function searchForGuest() {
+
+
+      const searchName =
+        guestSearchInput
+        .value
+        .trim()
+        .replace(
+          /\s+/g,
+          " "
         );
 
 
-        /* INVITATION / SCHEDULE */
 
-        const invitationView =
-            document.getElementById(
-                "invitationView"
-            );
-
-        const scheduleView =
-            document.getElementById(
-                "scheduleView"
-            );
-
-        const viewScheduleButton =
-            document.getElementById(
-                "viewScheduleButton"
-            );
-
-        const backToInvitationButton =
-            document.getElementById(
-                "backToInvitationButton"
-            );
+      lookupMessage.textContent =
+        "";
 
 
-        function showSchedule() {
+      lookupResults.innerHTML =
+        "";
 
-            invitationView.style.display =
-                "none";
 
-            scheduleView.style.display =
-                "block";
 
-            scheduleView.classList.remove(
-                "visible"
-            );
+      if (
+        searchName.length
+        <
+        2
+      ) {
 
-            void scheduleView.offsetWidth;
 
-            scheduleView.classList.add(
-                "visible"
-            );
+        lookupMessage.textContent =
+          "Please enter at least 2 letters of your name.";
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+
+        return;
+
+
+      }
+
+
+
+      searchTableButton.disabled =
+        true;
+
+
+      searchTableButton.textContent =
+        "Searching...";
+
+
+      lookupMessage.textContent =
+        "Searching for your table...";
+
+
+
+      try {
+
+
+        const encodedSearch =
+          encodeURIComponent(
+            "*"
+            +
+            searchName
+            +
+            "*"
+          );
+
+
+
+        const requestURL =
+
+          SUPABASE_URL
+
+          +
+
+          "/rest/v1/seating"
+
+          +
+
+          "?select=guest_name,table_number"
+
+          +
+
+          "&guest_name=ilike."
+
+          +
+
+          encodedSearch
+
+          +
+
+          "&order=guest_name.asc"
+
+          +
+
+          "&limit=30";
+
+
+
+        const response =
+          await fetch(
+
+            requestURL,
+
+            {
+
+              method:
+                "GET",
+
+
+              headers: {
+
+                "apikey":
+                  SUPABASE_ANON_KEY,
+
+                "Authorization":
+                  "Bearer "
+                  +
+                  SUPABASE_ANON_KEY,
+
+                "Accept":
+                  "application/json"
+
+              }
+
+            }
+
+          );
+
+
+
+        if (
+          !response.ok
+        ) {
+
+
+          throw new Error(
+            "Supabase request failed"
+          );
+
+
         }
 
 
-        function showInvitation() {
 
-            scheduleView.classList.remove(
-                "visible"
-            );
+        const guests =
+          await response.json();
 
-            scheduleView.style.display =
-                "none";
 
-            invitationView.style.display =
-                "block";
 
-            invitationView.style.opacity =
-                "1";
+        if (
+          guests.length
+          ===
+          0
+        ) {
 
-            invitationView.style.animation =
-                "none";
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+          lookupMessage.textContent =
+            "We couldn't find that name. Please check the spelling or speak with the reception team.";
+
+
+          return;
+
+
         }
 
 
-        viewScheduleButton.addEventListener(
-            "click",
-            showSchedule
+
+        if (
+          guests.length
+          ===
+          1
+        ) {
+
+
+          lookupMessage.textContent =
+            "We found your seating assignment.";
+
+
+        }
+
+
+        else {
+
+
+          lookupMessage.textContent =
+            "We found "
+            +
+            guests.length
+            +
+            " matching guests. Please find your name below.";
+
+
+        }
+
+
+
+        displayResults(
+          guests
         );
 
-        backToInvitationButton.addEventListener(
-            "click",
-            showInvitation
+
+      }
+
+
+      catch (
+        error
+      ) {
+
+
+        console.error(
+          "Table lookup error:",
+          error
         );
 
 
-        /* CONFETTI */
-
-        const prefersReducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
+        lookupMessage.textContent =
+          "We couldn't complete the search right now. Please try again.";
 
 
-        if (!prefersReducedMotion) {
+      }
 
-            window.addEventListener(
-                "load",
-                function () {
 
-                    setTimeout(
-                        startConfetti,
-                        600
-                    );
+      finally {
 
-                }
-            );
+
+        searchTableButton.disabled =
+          false;
+
+
+        searchTableButton.textContent =
+          "Find My Table";
+
+
+      }
+
+
+    }
+
+
+
+    searchTableButton.addEventListener(
+      "click",
+      searchForGuest
+    );
+
+
+
+    guestSearchInput.addEventListener(
+
+      "keydown",
+
+      function (
+        event
+      ) {
+
+
+        if (
+          event.key
+          ===
+          "Enter"
+        ) {
+
+
+          event.preventDefault();
+
+
+          searchForGuest();
+
+
         }
 
 
-        function startConfetti() {
+      }
 
-            const canvas =
-                document.getElementById(
-                    "confettiCanvas"
-                );
-
-            if (!canvas) {
-                return;
-            }
-
-            const context =
-                canvas.getContext("2d");
-
-            if (!context) {
-                return;
-            }
-
-            let width;
-            let height;
-            let animationFrame;
-
-            const pieces = [];
-            const pieceCount = 80;
-
-            const goldColours = [
-                "#D4AF37",
-                "#F3D675",
-                "#B08D57",
-                "#FFF0B3",
-                "#C9A227"
-            ];
+    );
 
 
-            function resizeCanvas() {
-
-                width =
-                    window.innerWidth;
-
-                height =
-                    window.innerHeight;
-
-                const ratio =
-                    window.devicePixelRatio || 1;
-
-                canvas.width =
-                    width * ratio;
-
-                canvas.height =
-                    height * ratio;
-
-                canvas.style.width =
-                    width + "px";
-
-                canvas.style.height =
-                    height + "px";
-
-                context.setTransform(
-                    ratio,
-                    0,
-                    0,
-                    ratio,
-                    0,
-                    0
-                );
-            }
 
 
-            function createPiece() {
 
-                return {
-                    x:
-                        Math.random() * width,
-
-                    y:
-                        Math.random() * -height,
-
-                    width:
-                        5 + Math.random() * 6,
-
-                    height:
-                        8 + Math.random() * 10,
-
-                    speed:
-                        1.5 + Math.random() * 2.5,
-
-                    drift:
-                        -0.8 + Math.random() * 1.6,
-
-                    rotation:
-                        Math.random() *
-                        Math.PI *
-                        2,
-
-                    rotationSpeed:
-                        -0.05 +
-                        Math.random() * 0.1,
-
-                    colour:
-                        goldColours[
-                            Math.floor(
-                                Math.random() *
-                                goldColours.length
-                            )
-                        ]
-                };
-            }
+    /* =========================
+       CONFETTI
+    ========================= */
 
 
-            function drawPiece(piece) {
-
-                context.save();
-
-                context.translate(
-                    piece.x,
-                    piece.y
-                );
-
-                context.rotate(
-                    piece.rotation
-                );
-
-                context.fillStyle =
-                    piece.colour;
-
-                context.fillRect(
-                    -piece.width / 2,
-                    -piece.height / 2,
-                    piece.width,
-                    piece.height
-                );
-
-                context.restore();
-            }
+    const prefersReducedMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
 
-            function updatePiece(piece) {
 
-                piece.y +=
-                    piece.speed;
-
-                piece.x +=
-                    piece.drift;
-
-                piece.rotation +=
-                    piece.rotationSpeed;
-            }
+    if (
+      !prefersReducedMotion
+    ) {
 
 
-            function animate() {
+      window.addEventListener(
 
-                context.clearRect(
-                    0,
-                    0,
-                    width,
-                    height
-                );
+        "load",
 
-                pieces.forEach(
-                    function (piece) {
-
-                        updatePiece(piece);
-                        drawPiece(piece);
-
-                    }
-                );
-
-                animationFrame =
-                    requestAnimationFrame(
-                        animate
-                    );
-            }
+        function () {
 
 
-            resizeCanvas();
+          setTimeout(
+            startConfetti,
+            600
+          );
 
 
-            for (
-                let i = 0;
-                i < pieceCount;
-                i++
-            ) {
-
-                pieces.push(
-                    createPiece()
-                );
-            }
-
-
-            window.addEventListener(
-                "resize",
-                resizeCanvas
-            );
-
-
-            animate();
-
-
-            setTimeout(
-                function () {
-
-                    cancelAnimationFrame(
-                        animationFrame
-                    );
-
-                    context.clearRect(
-                        0,
-                        0,
-                        width,
-                        height
-                    );
-
-                    window.removeEventListener(
-                        "resize",
-                        resizeCanvas
-                    );
-
-                },
-                2500
-            );
         }
 
-    </script>
+      );
+
+
+    }
+
+
+
+    function startConfetti() {
+
+
+      const canvas =
+        document.getElementById(
+          "confettiCanvas"
+        );
+
+
+      if (
+        !canvas
+      ) {
+
+        return;
+
+      }
+
+
+
+      const context =
+        canvas.getContext(
+          "2d"
+        );
+
+
+      if (
+        !context
+      ) {
+
+        return;
+
+      }
+
+
+
+      let width;
+
+      let height;
+
+      let animationFrame;
+
+
+      const pieces =
+        [];
+
+
+      const pieceCount =
+        80;
+
+
+
+      const goldColours = [
+
+        "#D4AF37",
+
+        "#F3D675",
+
+        "#B08D57",
+
+        "#FFF0B3",
+
+        "#C9A227"
+
+      ];
+
+
+
+      function resizeCanvas() {
+
+
+        width =
+          window.innerWidth;
+
+
+        height =
+          window.innerHeight;
+
+
+        const ratio =
+          window.devicePixelRatio
+          ||
+          1;
+
+
+
+        canvas.width =
+          width
+          *
+          ratio;
+
+
+        canvas.height =
+          height
+          *
+          ratio;
+
+
+        canvas.style.width =
+          width
+          +
+          "px";
+
+
+        canvas.style.height =
+          height
+          +
+          "px";
+
+
+
+        context.setTransform(
+
+          ratio,
+
+          0,
+
+          0,
+
+          ratio,
+
+          0,
+
+          0
+
+        );
+
+
+      }
+
+
+
+      function createPiece() {
+
+
+        return {
+
+
+          x:
+            Math.random()
+            *
+            width,
+
+
+          y:
+            Math.random()
+            *
+            -height,
+
+
+          width:
+            5
+            +
+            Math.random()
+            *
+            6,
+
+
+          height:
+            8
+            +
+            Math.random()
+            *
+            10,
+
+
+          speed:
+            1.5
+            +
+            Math.random()
+            *
+            2.5,
+
+
+          drift:
+            -0.8
+            +
+            Math.random()
+            *
+            1.6,
+
+
+          rotation:
+            Math.random()
+            *
+            Math.PI
+            *
+            2,
+
+
+          rotationSpeed:
+            -0.05
+            +
+            Math.random()
+            *
+            0.1,
+
+
+          colour:
+
+            goldColours[
+
+              Math.floor(
+
+                Math.random()
+                *
+                goldColours.length
+
+              )
+
+            ]
+
+
+        };
+
+
+      }
+
+
+
+      function drawPiece(
+        piece
+      ) {
+
+
+        context.save();
+
+
+        context.translate(
+          piece.x,
+          piece.y
+        );
+
+
+        context.rotate(
+          piece.rotation
+        );
+
+
+        context.fillStyle =
+          piece.colour;
+
+
+        context.fillRect(
+
+          -piece.width / 2,
+
+          -piece.height / 2,
+
+          piece.width,
+
+          piece.height
+
+        );
+
+
+        context.restore();
+
+
+      }
+
+
+
+      function updatePiece(
+        piece
+      ) {
+
+
+        piece.y +=
+          piece.speed;
+
+
+        piece.x +=
+          piece.drift;
+
+
+        piece.rotation +=
+          piece.rotationSpeed;
+
+
+      }
+
+
+
+      function animate() {
+
+
+        context.clearRect(
+
+          0,
+
+          0,
+
+          width,
+
+          height
+
+        );
+
+
+
+        pieces.forEach(
+
+          function (
+            piece
+          ) {
+
+
+            updatePiece(
+              piece
+            );
+
+
+            drawPiece(
+              piece
+            );
+
+
+          }
+
+        );
+
+
+
+        animationFrame =
+          requestAnimationFrame(
+            animate
+          );
+
+
+      }
+
+
+
+      resizeCanvas();
+
+
+
+      for (
+
+        let i = 0;
+
+        i < pieceCount;
+
+        i++
+
+      ) {
+
+
+        pieces.push(
+          createPiece()
+        );
+
+
+      }
+
+
+
+      window.addEventListener(
+        "resize",
+        resizeCanvas
+      );
+
+
+
+      animate();
+
+
+
+      setTimeout(
+
+        function () {
+
+
+          cancelAnimationFrame(
+            animationFrame
+          );
+
+
+          context.clearRect(
+
+            0,
+
+            0,
+
+            width,
+
+            height
+
+          );
+
+
+          window.removeEventListener(
+            "resize",
+            resizeCanvas
+          );
+
+
+        },
+
+        2500
+
+      );
+
+
+    }
+
+
+  </script>
+
 
 </body>
+
 </html>
